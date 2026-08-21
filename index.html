@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>影境人物志 · 大事纪</title>
+    <style>
+        :root {
+            --ink: #172126;
+            --muted: #687477;
+            --line: #d9dfd8;
+            --paper: #f6f5ef;
+            --panel: #fffefa;
+            --green: #52745a;
+            --green-soft: #e5eee1;
+            --red: #b55243;
+            --red-soft: #f4e1d9;
+            --blue: #376c88;
+            --blue-soft: #e2edf1;
+            --gold: #b1843d;
+            --gold-soft: #f5edd9;
+            --shadow: 0 16px 50px rgba(33, 45, 37, .09)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Noto Serif SC", "Source Han Serif SC", Georgia, serif
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        .app {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 258px 1fr;
+            grid-template-rows: 76px 1fr
+        }
+
+        .sidebar {
+            grid-row: 1/3;
+            padding: 27px 18px;
+            background: #24352d;
+            color: #edf2e9;
+            position: relative;
+            overflow: hidden
+        }
+
+        .sidebar:after {
+            content: "影";
+            position: absolute;
+            right: -25px;
+            bottom: -75px;
+            color: rgba(255, 255, 255, .035);
+            font-size: 290px;
+            font-weight: 700;
+            line-height: 1
+        }
+
+        .brand {
+            position: relative;
+            z-index: 1;
+            padding: 0 10px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, .16)
+        }
+
+        .eyebrow {
+            font: 700 11px/1.4 "Microsoft YaHei", sans-serif;
+            letter-spacing: .22em;
+            color: #bdcbb7
+        }
+
+        .brand h1 {
+            font-size: 27px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            margin: 8px 0 4px
+        }
+
+        .brand p {
+            font: 13px "Microsoft YaHei", sans-serif;
+            color: #b8c6b9;
+            margin: 0
+        }
+
+        .nav {
+            position: relative;
+            z-index: 1;
+            padding: 25px 0
+        }
+
+        .nav-title {
+            font: 700 11px "Microsoft YaHei", sans-serif;
+            letter-spacing: .15em;
+            color: #9fb29f;
+            padding: 0 10px 10px
+        }
+
+        .nav button {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #dbe6d9;
+            text-align: left;
+            padding: 13px 12px;
+            border-radius: 4px;
+            margin: 2px 0;
+            display: flex;
+            gap: 11px;
+            align-items: center;
+            font-size: 15px
+        }
+
+        .nav button:hover,
+        .nav button.active {
+            background: #486650;
+            color: #fff
+        }
+
+        .nav .icon {
+            width: 20px;
+            color: #c3d3bd;
+            font-family: Arial, sans-serif
+        }
+
+        .source-note {
+            position: absolute;
+            z-index: 1;
+            left: 28px;
+            right: 28px;
+            bottom: 25px;
+            font: 12px/1.8 "Microsoft YaHei", sans-serif;
+            color: #aebcaf
+        }
+
+        .source-note strong {
+            display: block;
+            color: #e5eee1;
+            font-weight: 500
+        }
+
+        .topbar {
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 254, 250, .86);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(12px)
+        }
+
+        .topbar h2 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .search {
+            width: 245px;
+            border: 1px solid var(--line);
+            background: #fffefa;
+            padding: 10px 13px;
+            border-radius: 3px;
+            outline: 0;
+            font: 13px "Microsoft YaHei", sans-serif
+        }
+
+        .search:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(82, 116, 90, .12)
+        }
+
+        .select {
+            border: 1px solid var(--line);
+            background: #fffefa;
+            padding: 9px 10px;
+            border-radius: 3px;
+            color: var(--ink);
+            font-size: 13px
+        }
+
+        .content {
+            padding: 30px 32px 40px;
+            overflow: auto
+        }
+
+        .view {
+            display: none
+        }
+
+        .view.active {
+            display: block
+        }
+
+        .view-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 25px
+        }
+
+        .view-head h3 {
+            font-size: 29px;
+            letter-spacing: .06em;
+            margin: 0 0 6px;
+            font-weight: 600
+        }
+
+        .view-head p {
+            margin: 0;
+            color: var(--muted);
+            font: 13px "Microsoft YaHei", sans-serif
+        }
+
+        .legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font: 12px "Microsoft YaHei", sans-serif;
+            color: var(--muted)
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px
+        }
+
+        .dot.green {
+            background: var(--green)
+        }
+
+        .dot.red {
+            background: var(--red)
+        }
+
+        .dot.blue {
+            background: var(--blue)
+        }
+
+        .dot.gold {
+            background: var(--gold)
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0 20px 0
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 94px;
+            width: 2px;
+            background: #cbd8cb
+        }
+
+        .era {
+            display: grid;
+            grid-template-columns: 94px 1fr;
+            gap: 28px;
+            position: relative;
+            margin: 0 0 17px
+        }
+
+        .era-year {
+            font: 600 17px/1.3 Georgia, serif;
+            text-align: right;
+            color: var(--green);
+            padding-top: 13px;
+            padding-right: 19px
+        }
+
+        .era-year:after {
+            content: "";
+            position: absolute;
+            left: 87px;
+            top: 18px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 4px solid var(--green);
+            z-index: 1
+        }
+
+        .event-list {
+            display: grid;
+            gap: 10px
+        }
+
+        .event {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 15px 18px;
+            box-shadow: 0 5px 18px rgba(33, 45, 37, .035);
+            display: grid;
+            grid-template-columns: 94px 1fr auto;
+            gap: 15px;
+            align-items: start;
+            transition: .18s
+        }
+
+        .event:hover,
+        .event.selected {
+            border-color: #96ad96;
+            transform: translateX(3px);
+            box-shadow: var(--shadow)
+        }
+
+        .event-date {
+            color: var(--muted);
+            font: 12px "Microsoft YaHei", sans-serif;
+            padding-top: 3px
+        }
+
+        .event h4 {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: 600
+        }
+
+        .event p {
+            margin: 0;
+            color: #5d6968;
+            font: 13px/1.65 "Microsoft YaHei", sans-serif
+        }
+
+        .event-tag {
+            font: 11px "Microsoft YaHei", sans-serif;
+            padding: 4px 7px;
+            color: var(--green);
+            background: var(--green-soft);
+            white-space: nowrap
+        }
+
+        .empty {
+            padding: 45px;
+            text-align: center;
+            color: var(--muted);
+            font: 14px "Microsoft YaHei", sans-serif
+        }
+
+        .faction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px
+        }
+
+        .faction-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            min-height: 190px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .faction-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--faction-color, var(--green))
+        }
+
+        .faction-card h4 {
+            margin: 0 0 5px;
+            font-size: 21px;
+            font-weight: 600
+        }
+
+        .faction-card .count {
+            font: 12px "Microsoft YaHei", sans-serif;
+            color: var(--muted)
+        }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 19px
+        }
+
+        .person-chip {
+            border: 1px solid #b8c9bc;
+            background: #f9fbf5;
+            color: #314a37;
+            padding: 8px 10px;
+            border-radius: 2px;
+            font-size: 13px;
+            transition: .15s
+        }
+
+        .person-chip:hover,
+        .person-chip.active {
+            background: var(--green);
+            color: white;
+            border-color: var(--green)
+        }
+
+        .structure-note {
+            font: 12px/1.7 "Microsoft YaHei", sans-serif;
+            color: var(--muted);
+            margin: 0 0 20px;
+            padding: 13px 16px;
+            border-left: 3px solid var(--gold);
+            background: #fbf7ea
+        }
+
+        .relation-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 295px;
+            gap: 20px
+        }
+
+        .graph-panel {
+            min-height: 555px;
+            position: relative;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            overflow: hidden;
+            background-image: linear-gradient(rgba(82, 116, 90, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(82, 116, 90, .045) 1px, transparent 1px);
+            background-size: 32px 32px
+        }
+
+        .graph-panel:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 47%, rgba(225, 237, 222, .8), transparent 36%)
+        }
+
+        .graph-edges {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .edge {
+            fill: none;
+            stroke: #a8b8ac;
+            stroke-width: 1.5;
+            stroke-dasharray: 5 5
+        }
+
+        .edge.enemy {
+            stroke: var(--red)
+        }
+
+        .edge.family {
+            stroke: var(--gold)
+        }
+
+        .edge.org {
+            stroke: var(--blue)
+        }
+
+        .edge-label {
+            font: 12px "Microsoft YaHei", sans-serif;
+            fill: #75817d
+        }
+
+        .graph-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            padding: 11px 15px;
+            min-width: 72px;
+            text-align: center;
+            border: 1px solid #9ab69f;
+            background: #fffefa;
+            box-shadow: 0 5px 16px rgba(42, 59, 45, .13);
+            font-size: 15px;
+            transition: .18s;
+            z-index: 2
+        }
+
+        .graph-node.core {
+            font-size: 21px;
+            padding: 18px 25px;
+            border: 2px solid var(--green);
+            background: #edf4e9
+        }
+
+        .graph-node.enemy {
+            border-color: #cf8a7c
+        }
+
+        .graph-node:hover,
+        .graph-node.active {
+            background: var(--green);
+            color: white;
+            transform: translate(-50%, -50%) scale(1.07)
+        }
+
+        .relation-list {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: 20px
+        }
+
+        .relation-list h4 {
+            font-size: 18px;
+            margin: 0 0 16px
+        }
+
+        .relation-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e7ebe5;
+            font: 13px/1.65 "Microsoft YaHei", sans-serif
+        }
+
+        .relation-item:last-child {
+            border: 0
+        }
+
+        .relation-item strong {
+            font-weight: 600
+        }
+
+        .relation-type {
+            color: var(--green);
+            font-size: 11px
+        }
+
+        .detail-drawer {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: min(390px, calc(100vw - 44px));
+            max-height: 68vh;
+            overflow: auto;
+            background: #fffefa;
+            border: 1px solid #c8d4c8;
+            box-shadow: 0 20px 70px rgba(28, 42, 32, .2);
+            padding: 22px;
+            z-index: 10;
+            display: none
+        }
+
+        .detail-drawer.open {
+            display: block
+        }
+
+        .close {
+            float: right;
+            border: 0;
+            background: transparent;
+            font-size: 22px;
+            color: var(--muted);
+            line-height: 1
+        }
+
+        .detail-drawer h3 {
+            margin: 5px 0 3px;
+            font-size: 24px
+        }
+
+        .detail-kicker {
+            font: 12px "Microsoft YaHei", sans-serif;
+            color: var(--green)
+        }
+
+        .detail-drawer p {
+            font: 13px/1.75 "Microsoft YaHei", sans-serif;
+            color: #5c6865
+        }
+
+        .detail-section {
+            border-top: 1px solid var(--line);
+            padding-top: 14px;
+            margin-top: 15px
+        }
+
+        .detail-section h4 {
+            margin: 0 0 8px;
+            font-size: 14px
+        }
+
+        .detail-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        .detail-section li {
+            font: 13px/1.7 "Microsoft YaHei", sans-serif;
+            padding: 5px 0;
+            border-bottom: 1px dashed #e1e6df
+        }
+
+        .mobile-nav {
+            display: none
+        }
+
+        @media(max-width:900px) {
+            .app {
+                grid-template-columns: 1fr;
+                grid-template-rows: 70px auto 1fr
+            }
+
+            .sidebar {
+                grid-row: auto;
+                padding: 14px 18px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between
+            }
+
+            .brand {
+                border: 0;
+                padding: 0
+            }
+
+            .brand h1 {
+                font-size: 20px;
+                margin: 3px 0
+            }
+
+            .brand p,
+            .eyebrow,
+            .source-note {
+                display: none
+            }
+
+            .nav {
+                padding: 0;
+                display: flex;
+                gap: 4px
+            }
+
+            .nav-title {
+                display: none
+            }
+
+            .nav button {
+                width: auto;
+                padding: 9px
+            }
+
+            .nav button span:last-child {
+                display: none
+            }
+
+            .mobile-nav {
+                display: inline
+            }
+
+            .topbar {
+                grid-row: 2;
+                padding: 12px 18px;
+                gap: 10px
+            }
+
+            .topbar h2 {
+                display: none
+            }
+
+            .top-actions {
+                width: 100%
+            }
+
+            .search {
+                flex: 1;
+                width: auto
+            }
+
+            .select {
+                max-width: 125px
+            }
+
+            .content {
+                padding: 22px 18px
+            }
+
+            .view-head {
+                display: block
+            }
+
+            .view-head h3 {
+                font-size: 25px;
+                margin-bottom: 7px
+            }
+
+            .legend {
+                margin-top: 15px
+            }
+
+            .event {
+                grid-template-columns: 70px 1fr
+            }
+
+            .event-tag {
+                grid-column: 2;
+                justify-self: start
+            }
+
+            .timeline:before {
+                left: 69px
+            }
+
+            .era {
+                grid-template-columns: 69px 1fr;
+                gap: 17px
+            }
+
+            .era-year {
+                font-size: 14px;
+                padding-right: 12px
+            }
+
+            .era-year:after {
+                left: 62px
+            }
+
+            .relation-layout {
+                grid-template-columns: 1fr
+            }
+
+            .graph-panel {
+                min-height: 480px
+            }
+
+            .relation-list {
+                display: none
+            }
+        }
+
+        .faction-subnav {
+            display: none;
+            padding: 0 0 16px 31px;
+            margin-top: -14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .13)
+        }
+
+        .faction-subnav.open {
+            display: block
+        }
+
+        .faction-subnav button {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #b9c9b8;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 13px;
+            border-left: 2px solid transparent
+        }
+
+        .faction-subnav button:hover,
+        .faction-subnav button.active {
+            color: #fff;
+            background: rgba(255, 255, 255, .08);
+            border-left-color: #c4d7b9
+        }
+
+        .structure-board {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 28px 24px 36px;
+            min-height: 560px;
+            overflow: auto
+        }
+
+        .structure-board h4 {
+            margin: 0;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600
+        }
+
+        .structure-board .board-caption {
+            text-align: center;
+            color: var(--muted);
+            font: 12px "Microsoft YaHei", sans-serif;
+            margin: 7px 0 28px
+        }
+
+        .org-tree {
+            min-width: 680px;
+            position: relative;
+            padding-top: 4px
+        }
+
+        .org-level {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            position: relative;
+            margin-top: 27px
+        }
+
+        .org-level:before {
+            content: "";
+            position: absolute;
+            top: -14px;
+            left: 10%;
+            right: 10%;
+            border-top: 1px solid #b9c9b9
+        }
+
+        .org-level:first-of-type:before {
+            display: none
+        }
+
+        .org-level:after {
+            content: "";
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            height: 14px;
+            border-left: 1px solid #b9c9b9
+        }
+
+        .org-level:first-of-type:after {
+            display: none
+        }
+
+        .org-branch {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding-top: 25px
+        }
+
+        .org-branch:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 25px;
+            border-left: 1px solid #b9c9b9
+        }
+
+        .org-node {
+            position: relative;
+            min-width: 112px;
+            max-width: 180px;
+            border: 1px solid #a9bcae;
+            background: #f9fbf5;
+            padding: 11px 13px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.35;
+            box-shadow: 0 4px 12px rgba(33, 45, 37, .07)
+        }
+
+        .org-node.root {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+            font-size: 18px;
+            padding: 14px 22px
+        }
+
+        .org-node.role {
+            background: #edf3ea;
+            color: #35523c;
+            border-color: #9ab39e
+        }
+
+        .org-node.ghost {
+            background: #f4efe1;
+            border-color: #c8b681;
+            color: #69542b
+        }
+
+        .org-node small {
+            display: block;
+            color: var(--muted);
+            font: 11px "Microsoft YaHei", sans-serif;
+            margin-top: 4px
+        }
+
+        .org-node.root small,
+        .org-node.role small {
+            color: inherit;
+            opacity: .78
+        }
+
+        .timeline-shell {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            gap: 20px;
+            min-height: 600px
+        }
+
+        .timepoints {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 12px;
+            max-height: calc(100vh - 230px);
+            overflow: auto
+        }
+
+        .timepoint {
+            display: block;
+            width: 100%;
+            border: 0;
+            border-left: 3px solid transparent;
+            background: transparent;
+            color: var(--ink);
+            text-align: left;
+            padding: 13px 15px;
+            margin: 2px 0;
+            font: 15px "Microsoft YaHei", sans-serif
+        }
+
+        .timepoint:hover {
+            background: #f0f4ed
+        }
+
+        .timepoint.active {
+            background: var(--green-soft);
+            border-left-color: var(--green);
+            color: #294632;
+            font-weight: 700
+        }
+
+        .timepoint small {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 400;
+            margin-top: 4px
+        }
+
+        .event-detail {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 30px 34px;
+            min-height: 600px
+        }
+
+        .event-detail h4 {
+            font-size: 25px;
+            margin: 0 0 8px;
+            font-weight: 600
+        }
+
+        .detail-meta {
+            color: var(--green);
+            font: 12px "Microsoft YaHei", sans-serif;
+            margin-bottom: 25px
+        }
+
+        .event-detail-list {
+            display: grid;
+            gap: 0;
+            border-top: 1px solid var(--line)
+        }
+
+        .event-detail-item {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+            font: 15px/1.9 "Microsoft YaHei", sans-serif;
+            color: #394744
+        }
+
+        .event-detail-item:before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            margin: 0 12px 2px 2px
+        }
+
+        @media(max-width:900px) {
+            .timeline-shell {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+
+            .timepoints {
+                max-height: 190px;
+                display: flex;
+                overflow: auto;
+                gap: 4px;
+                padding: 8px
+            }
+
+            .timepoint {
+                min-width: 190px;
+                border-left: 0;
+                border-bottom: 3px solid transparent
+            }
+
+            .timepoint.active {
+                border-bottom-color: var(--green)
+            }
+
+            .event-detail {
+                padding: 22px 18px;
+                min-height: 400px
+            }
+        }
+
+        .org-level {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            align-items: start;
+            gap: 24px
+        }
+
+        .org-branch {
+            align-items: flex-start
+        }
+
+        .org-branch>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%
+        }
+
+        .org-branch:before,
+        .org-level:before {
+            border-style: solid
+        }
+
+        .org-node.relation-leader {
+            background: #e7efe3;
+            border-color: #7d9d82;
+            color: #294632
+        }
+
+        .org-node.relation-member {
+            background: #f8fbf5;
+            border-color: #a9bcae;
+            color: #35523c
+        }
+
+        .org-node.relation-family {
+            background: #f5edd9;
+            border-color: #c5a76a;
+            color: #69542b
+        }
+
+        .org-node.relation-hostile {
+            background: #f4e1d9;
+            border-color: #cf8a7c;
+            color: #7b382e
+        }
+
+        .org-node.relation-neutral {
+            background: #edf1f0;
+            border-color: #aab9b8;
+            color: #425455
+        }
+
+        .structure-board {
+            padding: 0;
+            overflow: hidden;
+            min-height: 600px
+        }
+
+        .architecture-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--line);
+            background: #fbfcf8;
+            font: 12px "Microsoft YaHei", sans-serif;
+            color: var(--muted)
+        }
+
+        .architecture-toolbar button {
+            border: 1px solid var(--line);
+            background: #fffefa;
+            color: var(--ink);
+            padding: 5px 10px;
+            border-radius: 2px
+        }
+
+        .architecture-toolbar button:hover {
+            border-color: var(--green);
+            color: var(--green)
+        }
+
+        .architecture-toolbar .architecture-caption {
+            margin-right: auto
+        }
+
+        .architecture-viewport {
+            height: calc(100vh - 280px);
+            min-height: 520px;
+            overflow: hidden;
+            cursor: grab;
+            background-image: linear-gradient(rgba(82, 116, 90, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(82, 116, 90, .045) 1px, transparent 1px);
+            background-size: 32px 32px
+        }
+
+        .architecture-viewport.grabbing {
+            cursor: grabbing
+        }
+
+        .architecture-svg {
+            display: block;
+            transform-origin: 0 0
+        }
+
+        .architecture-edge {
+            fill: none;
+            stroke: #9caea0;
+            stroke-width: 1.5
+        }
+
+        .architecture-node {
+            cursor: pointer
+        }
+
+        .architecture-node rect {
+            stroke-width: 1.5
+        }
+
+        .architecture-node text {
+            font-family: "Microsoft YaHei", sans-serif;
+            text-anchor: middle;
+            pointer-events: none
+        }
+
+        .architecture-node .node-name {
+            font-size: 14px;
+            font-weight: 600;
+            fill: #24352d
+        }
+
+        .architecture-node .node-type {
+            font-size: 10px;
+            fill: #687477
+        }
+
+        .architecture-node.relation-leader rect {
+            fill: #e7efe3;
+            stroke: #7d9d82
+        }
+
+        .architecture-node.relation-member rect {
+            fill: #f8fbf5;
+            stroke: #a9bcae
+        }
+
+        .architecture-node.relation-family rect {
+            fill: #f5edd9;
+            stroke: #c5a76a
+        }
+
+        .architecture-node.relation-hostile rect {
+            fill: #f4e1d9;
+            stroke: #cf8a7c
+        }
+
+        .architecture-node.relation-neutral rect {
+            fill: #edf1f0;
+            stroke: #aab9b8
+        }
+
+        .architecture-node.root rect {
+            fill: var(--green);
+            stroke: var(--green)
+        }
+
+        .architecture-node.root .node-name,
+        .architecture-node.root .node-type {
+            fill: #fff
+        }
+
+        .faction-subnav {
+            margin-top: 4px;
+            margin-bottom: 10px;
+            padding-top: 4px
+        }
+
+        .profile-event-link {
+            display: block;
+            overflow: hidden;
+            color: var(--blue);
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .profile-event-link:hover {
+            text-decoration: underline;
+            color: #24536e
+        }
+
+        .event-detail-item.target-event {
+            background: #eaf2f5;
+            color: #24536e
+        }
+
+        .faction-subnav {
+            margin-top: 4px;
+            margin-bottom: 10px;
+            padding-top: 4px
+        }
+
+        .profile-event-link {
+            display: block;
+            overflow: hidden;
+            color: var(--blue);
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .profile-event-link:hover {
+            text-decoration: underline;
+            color: #24536e
+        }
+
+        .event-detail-item.target-event {
+            background: #eaf2f5;
+            color: #24536e
+        }
+
+        .topbar-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+
+        .topbar-subtitle {
+            margin: 0;
+            color: var(--muted);
+            font: 12px "Microsoft YaHei", sans-serif
+        }
+
+        .topbar-status {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font: 12px "Microsoft YaHei", sans-serif;
+            color: var(--muted)
+        }
+
+        @media(max-width:900px) {
+            .faction-subnav {
+                position: static;
+                top: auto;
+                left: auto;
+                right: auto;
+                margin: 4px 0 8px;
+                padding: 4px 0 8px;
+                display: none
+            }
+
+            .faction-subnav.open {
+                display: flex;
+                flex-wrap: wrap
+            }
+        }
+
+        body {
+            overflow: hidden
+        }
+
+        .app {
+            height: 100vh;
+            min-height: 0
+        }
+
+        .content {
+            overflow: hidden;
+            min-height: 0
+        }
+
+        .timeline-shell {
+            height: calc(100vh - 190px);
+            min-height: 0
+        }
+
+        .timepoints,
+        .event-detail {
+            height: 100%;
+            min-height: 0;
+            overflow-y: auto
+        }
+
+        .architecture-toolbar {
+            padding: 12px 16px
+        }
+
+        .architecture-toolbar button {
+            display: none
+        }
+
+        @media(max-width:900px) {
+            .timeline-shell {
+                height: calc(100vh - 180px);
+                display: grid;
+                grid-template-rows: 220px minmax(0, 1fr)
+            }
+
+            .timepoints {
+                height: 220px
+            }
+
+            .event-detail {
+                height: auto;
+                min-height: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="eyebrow">SHADOW REALM ARCHIVE</div>
+                <h1>影境志</h1>
+                <p>人物与历史的交互档案</p>
+            </div>
+            <nav class="nav">
+                <div class="nav-title">浏览方式</div><button class="active" data-view="timeline"><span
+                        class="icon">◷</span><span>影境大事纪</span></button><button data-view="factions"><span
+                        class="icon">▦</span><span>势力架构</span></button>
+                <div id="factionSubnav" class="faction-subnav"></div>
+            </nav>
+        </aside>
+        <header class="topbar">
+            <div class="topbar-info">
+                <h2 id="pageTitle">影境大事纪</h2>
+                <p id="pageSubtitle" class="topbar-subtitle">点击左侧时间点，在右侧阅读该时间点内发生的全部事件。</p>
+            </div><span id="topbarStatus" hidden></span><span id="workbookStatus" hidden></span>
+        </header>
+        <main class="content">
+            <section id="timeline" class="view active">
+                <div class="timeline-shell">
+                    <div id="timepoints" class="timepoints">
+                        <div class="loading">正在加载时间线</div>
+                    </div>
+                    <div id="eventDetail" class="event-detail">
+                        <div class="loading">请选择左侧时间点</div>
+                    </div>
+                </div>
+            </section>
+            <section id="factions" class="view">
+                <div id="structureBoard" class="structure-board"></div>
+            </section>
+            <section id="relations" class="view">
+                <div class="relation-layout">
+                    <div id="graph" class="graph-panel"></div>
+                    <div id="relationList" class="relation-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="drawer" class="detail-drawer"><button id="closeDrawer" class="close" aria-label="关闭">×</button>
+        <div id="drawerContent"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        let factions = [
+            { name: '组织', color: '#52745a', people: ['沐天邈', '魂', '左殇', '暗禅', '虚空', '沐小葵', '玉妖', '铁鬼', '全忠', '小斯', '第七人', '玄鱼', '狱', '爆魔', '刃鬼', '铰者', '玄者', '铸者', '力者', '刀者', '锤者', '钩者', '顽者'] },
+            { name: '十一人阁', color: '#8b7444', people: ['黄金剑客', '玄玉', '半月花', '飞云秦', '上官斩', '血魁', '坠', '梦华', '醉苍穹', '苦海', '赢老太君', '蜃楼之主'] },
+            { name: '龙氏家族', color: '#637d49', people: ['龙泰然', '龙一', '龙二：龙亦绝', '龙三', '龙四：龙烈', '龙五', '龙六', '龙七', '龙八', '龙九：龙星', '龙鸣玉'] },
+            { name: '影', color: '#6f657c', people: ['邪无天', '腰无骨', '葬无底', '剑无影', '影魅', '狂影'] },
+            { name: '暗魔天堡', color: '#8b604b', people: ['魔少城', '魂', '魔天', '魔海', '魔川', '魔野'] },
+            { name: '中立门派', color: '#52748b', people: ['妙手老张', '灰寡妇', '白头客', '聚宝财案', '红白娘子', '昆仑三杰', '门司', '正帮', '黑镖门', '金钱赌坊', '全玉阁', '械城', '大荒天堡', '天下钱庄', '青堡书院', '学士阁', '守正司'] },
+            { name: '玄家', color: '#687e86', people: ['玄墨', '玄礼', '玄机', '玄玉', '玄鱼'] },
+            { name: '赢氏家族', color: '#9b7046', people: ['赢老太君', '赢妙', '澄儿'] }
+        ];
+        let structures = {
+            '组织': { caption: '创始人与组织成员的上下级关系', root: ['沐天邈', '创始人'], branches: [{ head: ['魂', '冥使'], children: ['暗禅', '虚空'] }, { head: ['左殇', '冥使'], children: ['偃淬', '玄鱼'] }, { head: ['鬼差', '组织分支'], children: ['狱', '爆魔', '刃鬼', '铰者', '玄者', '铸者', '力者', '刀者', '锤者', '钩者', '顽者'] }, { head: ['沐小葵', '组织成员'], children: ['玉妖', '铁鬼', '全忠', '小斯', '第七人'] }] },
+            '十一人阁': { caption: '黄金剑客及其麾下成员', root: ['黄金剑客', '创始人'], branches: [{ head: ['玄玉', '成员'], children: [] }, { head: ['上官斩', '成员'], children: [] }, { head: ['赢老太君', '成员'], children: [] }, { head: ['蜃楼之主', '成员'], children: [] }] },
+            '龙氏家族': { caption: '龙泰然与家族后辈', root: ['龙泰然', '创始人'], branches: [{ head: ['龙一', '儿子'], children: [] }, { head: ['龙二：龙亦绝', '儿子'], children: [] }, { head: ['龙三', '儿子'], children: [] }, { head: ['龙四：龙烈', '儿子'], children: [] }, { head: ['龙五', '儿子'], children: [] }, { head: ['龙六', '儿子'], children: [] }, { head: ['龙七', '儿子'], children: [] }, { head: ['龙八', '儿子'], children: [] }, { head: ['龙九：龙星', '儿子'], children: [] }, { head: ['龙鸣玉', '后辈'], children: [] }] },
+            '影': { caption: '邪无天与影组织成员', root: ['邪无天', '创始人'], branches: [{ head: ['腰无骨', '下属'], children: [] }, { head: ['葬无底', '下属'], children: [] }, { head: ['剑无影', '下属'], children: [] }, { head: ['冷荼', '下属'], children: [] }, { head: ['影魅', '下属'], children: [] }] },
+            '暗魔天堡': { caption: '暗魔天堡人物关系', root: ['魔少城', '核心人物'], branches: [{ head: ['魂', '后人'], children: [] }, { head: ['魔天', '成员'], children: [] }, { head: ['魔海', '成员'], children: [] }, { head: ['魔川', '成员'], children: [] }, { head: ['魔野', '成员'], children: [] }] },
+            '中立门派': { caption: '图片中并列出现的中立组织与门派', root: ['中立门派', '势力集合'], branches: [{ head: ['幕霜堂', '门派'], children: [] }, { head: ['械城', '组织'], children: [] }, { head: ['大荒天堡', '组织'], children: [] }, { head: ['天下钱庄', '组织'], children: [] }, { head: ['青堡书院', '组织'], children: [] }, { head: ['学士阁', '组织'], children: [] }, { head: ['守正司', '组织'], children: [] }] },
+            '玄家': { caption: '玄家人物关系', root: ['玄墨', '家族核心'], branches: [{ head: ['玄礼', '家族成员'], children: [] }, { head: ['玄机', '家族成员'], children: [] }, { head: ['玄玉', '家族成员'], children: [] }, { head: ['玄鱼', '家族成员'], children: [] }] },
+            '赢氏家族': { caption: '赢氏家族成员', root: ['赢老太君', '家族核心'], branches: [{ head: ['赢妙', '家族成员'], children: [] }, { head: ['澄儿', '家族成员'], children: [] }] }
+        };
+        const events = [
+            { year: '-600年', date: '远古', title: '落城建立', desc: '影境历史时间轴的早期节点，落城成为后续人物与势力活动的重要地点。', tag: '建立', type: 'build', faction: '组织', people: ['组织'] },
+            { year: '-500年', date: '远古', title: '组织成立', desc: '组织作为重要势力登上影境历史舞台。', tag: '建立', type: 'build', faction: '组织', people: ['沐天邈', '组织'] },
+            { year: '-400年', date: '远古', title: '组织与相关势力活动', desc: '时间轴记录了组织早期发展及其与周边势力的联系。', tag: '势力', type: 'build', faction: '组织', people: ['组织'] },
+            { year: '-300年', date: '远古', title: '火器兴，幕霜堂受益', desc: '大事纪中记录的时代变化，影响中立门派及后续势力格局。', tag: '变化', type: 'discover', faction: '中立门派', people: ['中立门派'] },
+            { year: '-200年', date: '远古', title: '中原大战', desc: '大规模冲突改变多方势力的活动范围与人物命运。', tag: '冲突', type: 'conflict', faction: '组织', people: ['组织'] },
+            { year: '-100年', date: '远古', title: '魂与沐天邈相关往事', desc: '人物志与大事纪共同指向魂、沐天邈及组织之间的重要关联。', tag: '人物', type: 'discover', faction: '组织', people: ['魂', '沐天邈'] },
+            { year: '-40年', date: '历史', title: '魂出生', desc: '魂的人物线开始进入大事纪，后续与多个势力产生联系。', tag: '出生', type: 'build', faction: '暗魔天堡', people: ['魂'] },
+            { year: '-27年', date: '历史', title: '组织出现新的成员与行动', desc: '时间轴记录组织成员变动，以及与其他势力的接触。', tag: '组织', type: 'build', faction: '组织', people: ['组织', '左殇'] },
+            { year: '-25年', date: '历史', title: '魂与左殇相关行动', desc: '魂与左殇在落城等地展开行动，人物志中的组织关系由此产生更多交汇。', tag: '行动', type: 'conflict', faction: '组织', people: ['魂', '左殇'] },
+            { year: '-5年', date: '历史', title: '玄家与组织产生联系', desc: '大事纪记录玄家人物与组织人物之间的往来线索。', tag: '往来', type: 'discover', faction: '玄家', people: ['玄家', '组织'] },
+            { year: '0年', date: '当前纪元', title: '魂、左殇进入落城', desc: '两位核心人物的行动将组织、落城与后续事件连接起来。', tag: '行动', type: 'build', faction: '组织', people: ['魂', '左殇'] },
+            { year: '3年', date: '当前纪元', title: '人物关系持续交错', desc: '多方人物在落城及周边发生接触，冲突与调查线逐渐集中。', tag: '往来', type: 'discover', faction: '组织', people: ['魂', '左殇', '沐小葵'] },
+            { year: '5年', date: '当前纪元', title: '组织与十一人阁冲突升级', desc: '人物志中多条战斗关系在这一时期汇聚，黄金剑客及蜃楼之主等人物被卷入。', tag: '冲突', type: 'conflict', faction: '十一人阁', people: ['组织', '黄金剑客', '蜃楼之主'] },
+            { year: '7年', date: '当前纪元', title: '十一人阁相关行动', desc: '时间轴继续记录组织与十一人阁之间的推进与对抗。', tag: '冲突', type: 'conflict', faction: '十一人阁', people: ['组织', '十一人阁'] },
+            { year: '10年', date: '当前纪元', title: '邪无天与影势力相关事件', desc: '邪无天、腰无骨、葬无底、剑无影等人物的行动构成影势力线。', tag: '影', type: 'conflict', faction: '影', people: ['邪无天', '腰无骨', '剑无影'] },
+            { year: '12年', date: '当前纪元', title: '龙氏家族线索出现', desc: '人物志中的龙氏家族与其他核心人物发生关联，家族关系逐步进入主线。', tag: '家族', type: 'discover', faction: '龙氏家族', people: ['龙泰然', '龙五', '龙鸣玉'] },
+            { year: '13年', date: '当前纪元', title: '组织与龙氏家族发生交集', desc: '组织行动影响龙氏家族成员，家族关系与势力关系开始重叠。', tag: '往来', type: 'conflict', faction: '龙氏家族', people: ['组织', '龙氏家族'] },
+            { year: '16年', date: '当前纪元', title: '魂与左殇再次展开行动', desc: '两位核心人物的关系线继续推进，并牵动蜃楼之主等人物。', tag: '行动', type: 'conflict', faction: '组织', people: ['魂', '左殇', '蜃楼之主'] },
+            { year: '18年', date: '当前纪元', title: '大事纪进入多线并行阶段', desc: '组织、龙氏家族、十一人阁与影等多条势力线同时发展。', tag: '势力', type: 'discover', faction: '组织', people: ['组织', '龙氏家族', '影'] },
+            { year: '20年', date: '当前纪元', title: '魂与左殇相关战斗', desc: '大事纪记录多次战斗与人物遭遇，人物关系图中的敌对线在此阶段最密集。', tag: '战斗', type: 'conflict', faction: '组织', people: ['魂', '左殇', '黄金剑客', '蜃楼之主'] },
+            { year: '21年', date: '当前纪元', title: '新线索与人物命运变化', desc: '事件继续推动多方人物的状态变化。', tag: '变化', type: 'discover', faction: '组织', people: ['魂', '左殇'] },
+            { year: '22年', date: '当前纪元', title: '跨势力往来', desc: '人物志中的多条彩色关系线在大事纪中对应为跨势力往来与冲突。', tag: '往来', type: 'discover', faction: '组织', people: ['组织', '十一人阁', '龙氏家族'] },
+            { year: '23年', date: '当前纪元', title: '重要人物冲突', desc: '围绕核心人物的战斗、追踪和调查线继续发展。', tag: '冲突', type: 'conflict', faction: '组织', people: ['魂', '左殇'] },
+            { year: '24年', date: '当前纪元', title: '人物关系产生转折', desc: '部分人物从盟友、上下级或旁观者转为冲突参与者。', tag: '转折', type: 'discover', faction: '组织', people: ['魂', '左殇', '沐小葵'] },
+            { year: '25年', date: '当前纪元', title: '魂与左殇推进任务线', desc: '相关事件将组织行动、落城和多位敌对人物连接在同一段历史中。', tag: '行动', type: 'conflict', faction: '组织', people: ['魂', '左殇'] },
+            { year: '28年', date: '当前纪元', title: '影势力相关战斗', desc: '邪无天及其下属人物的行动与组织人物发生交集。', tag: '战斗', type: 'conflict', faction: '影', people: ['邪无天', '腰无骨', '影'] },
+            { year: '30年', date: '当前纪元', title: '十一人阁相关人物命运变化', desc: '黄金剑客、蜃楼之主等人物的历史状态发生变化。', tag: '变化', type: 'conflict', faction: '十一人阁', people: ['黄金剑客', '蜃楼之主'] },
+            { year: '33年', date: '当前纪元', title: '组织线索持续推进', desc: '人物之间的旧关系与新事件互相叠加，适合通过人物关系视图回溯。', tag: '线索', type: 'discover', faction: '组织', people: ['魂', '组织'] },
+            { year: '37年', date: '当前纪元', title: '龙氏家族与组织的后续交集', desc: '家族成员和组织人物继续出现在同一历史线中。', tag: '家族', type: 'discover', faction: '龙氏家族', people: ['龙氏家族', '组织'] },
+            { year: '40年', date: '当前纪元', title: '核心人物关系再次收束', desc: '大事纪的后段事件将多个势力和核心人物的关系汇聚。', tag: '转折', type: 'conflict', faction: '组织', people: ['魂', '左殇', '组织'] },
+            { year: '43年', date: '当前纪元', title: '近世事件节点', desc: '时间轴当前可见的后续节点，保留为历史查询入口。', tag: '近世', type: 'discover', faction: '组织', people: ['组织'] }
+        ];
+        const relations = [
+            ['魂', '沐天邈', '组织 / 义亲', 'org'], ['魂', '左殇', '组织关系', 'org'], ['魂', '魔天', '父子', 'family'], ['魂', '魔剑', '兄弟', 'family'], ['魂', '沐小葵', '组织往来', 'org'], ['左殇', '龙五', '父子', 'family'], ['左殇', '玄鱼', '情侣', 'family'], ['左殇', '偃淬', '下属', 'org'], ['沐天邈', '沐小葵', '父女', 'family'], ['黄金剑客', '玄玉', '下属', 'org'], ['黄金剑客', '上官斩', '下属', 'org'], ['黄金剑客', '蜃楼之主', '下属', 'org'], ['邪无天', '腰无骨', '下属', 'org'], ['邪无天', '葬无底', '下属', 'org'], ['邪无天', '剑无影', '下属', 'org'], ['邪无天', '冷荼', '下属', 'org'], ['龙泰然', '龙五', '父子', 'family'], ['龙泰然', '龙鸣玉', '后辈', 'family'], ['魂', '邪无天', '敌对 / 战斗', 'enemy'], ['左殇', '邪无天', '敌对 / 战斗', 'enemy'], ['组织', '十一人阁', '冲突', 'enemy'], ['组织', '影', '冲突', 'enemy']
+        ];
+        const $ = id => document.getElementById(id); let currentView = 'timeline'; let query = ''; let faction = 'all'; let workbookTimeline = []; let selectedTime = 0; let characterNames = []; let timelineTarget = null;
+        function matches(text) { return !query || text.toLowerCase().includes(query.toLowerCase()) }
+        function parseCsv(text) { const rows = []; let row = [], cell = '', quoted = false; for (let index = 0; index < text.length; index++) { const char = text[index], next = text[index + 1]; if (char === '"' && quoted && next === '"') { cell += '"'; index++; continue } if (char === '"') { quoted = !quoted; continue } if (char === ',' && !quoted) { row.push(cell.trim()); cell = ''; continue } if ((char === '\n' || char === '\r') && !quoted) { if (char === '\r' && next === '\n') index++; row.push(cell.trim()); if (row.some(value => value)) { rows.push(row) } row = []; cell = ''; continue } cell += char } if (cell || row.length) { row.push(cell.trim()); rows.push(row) } if (rows[0]?.[0]?.charCodeAt(0) === 65279) rows[0][0] = rows[0][0].slice(1); return rows }
+        function buildFactionConfig(rows) { const headers = rows.shift() || []; const indexOf = name => headers.indexOf(name); const organization = indexOf('所属组织'), person = indexOf('人物'), parent = indexOf('上级或关联对象'), type = indexOf('关系类型'), note = indexOf('备注'); const configRows = rows.map(row => ({ faction: row[organization] || '', person: row[person] || '', parent: row[parent] || '', type: row[type] || '', note: row[note] || '' })).filter(row => row.faction && row.person && row.faction !== '关系'); characterNames = [...new Set(configRows.map(row => row.person))].sort((a, b) => b.length - a.length); enrichWorkbookPeople(); const factionNames = [...new Set(configRows.map(row => row.faction))]; factions = factionNames.map((name, index) => ({ name, color: ['#52745a', '#8b7444', '#637d49', '#6f657c', '#8b604b', '#52748b', '#687e86', '#9b7046'][index % 8], people: [...new Set(configRows.filter(row => row.faction === name).map(row => row.person))] })); structures = {}; factionNames.forEach(name => { const items = configRows.filter(row => row.faction === name); const rootRow = items.find(row => !row.parent) || items.find(row => /创始人|核心|堡主|家族核心/.test(row.type)) || items[0]; const rootName = rootRow.person; const childrenOf = parentName => items.filter(row => row.person !== rootName && (row.parent === parentName || (parentName === rootName && row.parent === name))); const makeBranch = row => ({ head: [row.person, row.type || '成员'], children: childrenOf(row.person).map(makeBranch) }); const direct = childrenOf(rootName); const orphan = items.filter(row => row.person !== rootName && !row.parent && !direct.some(child => child.person === row.person)); structures[name] = { caption: `${name} · ${items.length} 条可编辑配置记录`, root: [rootName, rootRow.type || '核心人物'], branches: [...direct, ...orphan].map(makeBranch) }; }); }
+        function enrichWorkbookPeople() { workbookTimeline.forEach(item => item.events.forEach(event => { event.people = characterNames.filter(name => event.text.includes(name)) })) }
+        async function loadFactionConfig() { try { const response = await fetch('影境人物志.csv'); if (!response.ok) throw new Error('影境人物志.csv 无法读取'); const rows = parseCsv(await response.text()); buildFactionConfig(rows); if (!factions.some(item => item.name === faction)) faction = factions[0]?.name || '组织'; renderFactionSubnav(); if (currentView === 'factions') renderFactions() } catch (error) { console.error(error) } }
+        function renderTimeline() { const source = workbookTimeline.length ? workbookTimeline : events.map(e => ({ time: e.year, events: [{ text: e.title + '：' + e.desc, people: e.people || [] }] })); const filtered = source.filter(item => matches(item.time + ' ' + item.events.map(event => event.text).join(' '))); if (!filtered.length) { $('timepoints').innerHTML = '<div class="empty">没有符合条件的时间点</div>'; $('eventDetail').innerHTML = '<div class="empty">没有符合条件的事件</div>'; return } const target = timelineTarget; if (target) { const targetIndex = filtered.findIndex(item => item.time === target.time); if (targetIndex >= 0) selectedTime = targetIndex } if (selectedTime >= filtered.length) selectedTime = 0; $('timepoints').innerHTML = filtered.map((item, index) => `<button class="timepoint ${index === selectedTime ? 'active' : ''}" data-time="${index}">${item.time}</button>`).join(''); const selected = filtered[selectedTime], people = [...new Set(selected.events.flatMap(event => event.people || []))]; const peopleText = people.length ? `出场人物有：${people.join('、')}` : '出场人物有：暂无已识别人物'; $('eventDetail').innerHTML = `<h4>${selected.time}</h4><div class="detail-meta">${peopleText}</div><div class="event-detail-list">${selected.events.map((event, index) => `<div class="event-detail-item ${target && target.text === event.text ? 'target-event' : ''}" data-event-index="${index}">${event.text}</div>`).join('')}</div>`; document.querySelectorAll('.timepoint').forEach(el => el.onclick = () => { selectedTime = Number(el.dataset.time); renderTimeline() }); if (target && target.text) { const targetEvent = selected.events.findIndex(event => event.text === target.text); if (targetEvent >= 0) $('eventDetail').querySelector(`[data-event-index="${targetEvent}"]`)?.scrollIntoView({ block: 'center' }) } timelineTarget = null; $('workbookStatus').textContent = workbookTimeline.length ? `已读取 Book1.xlsx · ${workbookTimeline.length} 个时间点` : '显示备用数据'; }
+        async function loadWorkbookTimeline() { try { const response = await fetch('Book1.xlsx'); if (!response.ok) throw new Error('Book1.xlsx 无法读取'); const workbook = XLSX.read(await response.arrayBuffer(), { type: 'array' }); const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1, defval: '' }); let currentTime = ''; const grouped = []; rows.slice(1).forEach(row => { const time = String(row[0] || '').trim(); const text = String(row[1] || '').trim(); if (time) currentTime = time; if (!currentTime || !text) return; let item = grouped[grouped.length - 1]; if (!item || item.time !== currentTime) { item = { time: currentTime, events: [] }; grouped.push(item) } item.events.push({ text, people: [] }) }); workbookTimeline = grouped; enrichWorkbookPeople(); selectedTime = 0; renderTimeline() } catch (error) { $('workbookStatus').textContent = '读取 Book1.xlsx 失败'; $('timepoints').innerHTML = '<div class="empty">无法直接读取 Book1.xlsx，请通过本地服务器打开页面。</div>'; $('eventDetail').innerHTML = '<div class="empty">请使用 VS Code Live Server 或其他本地服务器访问 index.html。</div>'; console.error(error) } }
+        function renderFactionSubnav() { const names = factions.map(f => f.name); $('factionSubnav').innerHTML = names.map(name => `<button class="${name === faction ? 'active' : ''}" data-faction="${name}">${name}</button>`).join(''); document.querySelectorAll('[data-faction]').forEach(el => el.onclick = () => { faction = el.dataset.faction; setView('factions') }); }
+        function relationClass(label = '') { if (/敌对|杀害|冲突/.test(label)) return 'relation-hostile'; if (/父|子|兄|姐|妹|家族|后辈|祖先|继承|情侣|收养/.test(label)) return 'relation-family'; if (/创始|首领|上级|核心|堡主|冥主/.test(label)) return 'relation-leader'; if (/成员|下属|人使|冥使|鬼差|组织/.test(label)) return 'relation-member'; return 'relation-neutral' }
+        function orgNode(node, kind = '') { return `<button class="org-node ${kind} ${relationClass(node[1])}" data-person="${node[0]}">${node[0]}<small>${node[1]}</small></button>` }
+        function flattenStructure(structure) { const levels = []; const edges = []; function visit(rawNode, parent, depth) { const node = typeof rawNode === 'string' ? { head: [rawNode, '下属'], children: [] } : rawNode; const current = { name: node.head[0], type: node.head[1], depth, root: depth === 0 }; (levels[depth] ??= []).push(current); if (parent) edges.push({ parent, child: current }); (node.children || []).forEach(child => visit(child, current, depth + 1)) } visit({ head: structure.root, children: structure.branches }, null, 0); return { levels, edges } }
+        function architectureSvg(structure) { const layout = flattenStructure(structure); const nodeWidth = 142, nodeHeight = 58, xGap = 28, yGap = 92, marginX = 50, marginY = 42; const root = layout.levels[0][0]; const children = new Map(); layout.edges.forEach(edge => { if (!children.has(edge.parent)) children.set(edge.parent, []); children.get(edge.parent).push(edge.child) }); function subtreeWidth(node) { const childNodes = children.get(node) || []; if (!childNodes.length) { node.subtreeWidth = 1; return 1 } node.subtreeWidth = childNodes.reduce((total, child) => total + subtreeWidth(child), 0); return node.subtreeWidth } subtreeWidth(root); function place(node, start) { const childNodes = children.get(node) || []; if (!childNodes.length) { node.x = start * (nodeWidth + xGap); return } let cursor = start; childNodes.forEach(child => { const width = subtreeWidth(child); place(child, cursor); cursor += width }); node.x = (childNodes[0].x + childNodes[childNodes.length - 1].x) / 2 } place(root, 0); const leafCount = Math.max(1, root.subtreeWidth), rawWidth = leafCount * (nodeWidth + xGap) - xGap; const width = Math.max(900, marginX * 2 + rawWidth), height = marginY * 2 + layout.levels.length * (nodeHeight + yGap) - yGap; const rootShift = width / 2 - (root.x + nodeWidth / 2); layout.levels.flat().forEach(node => { node.x += rootShift; node.y = marginY + node.depth * (nodeHeight + yGap) }); const edges = layout.edges.map(edge => { const x1 = edge.parent.x + nodeWidth / 2, y1 = edge.parent.y + nodeHeight, x2 = edge.child.x + nodeWidth / 2, y2 = edge.child.y, mid = (y1 + y2) / 2; return `<path class="architecture-edge" d="M ${x1} ${y1} V ${mid} H ${x2} V ${y2}"/>` }).join(''); const nodes = layout.levels.flat().map(node => `<g class="architecture-node ${relationClass(node.type)} ${node.root ? 'root' : ''}" data-person="${node.name}" transform="translate(${node.x},${node.y})"><rect width="${nodeWidth}" height="${nodeHeight}" rx="3"/><text class="node-name" x="${nodeWidth / 2}" y="24">${node.name}</text><text class="node-type" x="${nodeWidth / 2}" y="43">${node.type}</text></g>`).join(''); return { markup: `<svg class="architecture-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${edges}${nodes}</svg>`, width, height } }
+        function renderFactions() { const name = faction === 'all' ? '组织' : faction; const structure = structures[name] || structures[Object.keys(structures)[0]]; if (!structure) return; if (currentView === 'factions') { $('pageTitle').textContent = `势力架构 · ${name}`; $('pageSubtitle').textContent = '按《影境人物志》的层级关系展开势力，点击人物查看档案。'; $('topbarStatus').innerHTML = '<span>关系类型决定节点背景</span>' } $('structureBoard').innerHTML = `<div class="architecture-toolbar"><span class="architecture-caption">${structure.caption} · 同级节点已对齐</span><button data-architecture-zoom="out">−</button><button data-architecture-zoom="reset">100%</button><button data-architecture-zoom="in">＋</button></div><div class="architecture-viewport">${architectureSvg(structure).markup}</div>`; const viewport = $('structureBoard').querySelector('.architecture-viewport'), svg = viewport.querySelector('.architecture-svg'); let scale = 1, offsetX = Math.round((viewport.clientWidth - svg.width.baseVal.value) / 2), offsetY = Math.round((viewport.clientHeight - svg.height.baseVal.value) / 2), startX = 0, startY = 0; const applyTransform = () => { svg.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})` }; applyTransform(); const zoom = amount => { scale = Math.max(.45, Math.min(2.5, scale + amount)); applyTransform() }; svg.addEventListener('click', event => { const node = event.target.closest('.architecture-node'); if (node) openPerson(node.dataset.person) }); svg.addEventListener('pointerdown', event => { if (event.target.closest('.architecture-node')) event.stopPropagation() }); $('structureBoard').querySelectorAll('[data-architecture-zoom]').forEach(button => button.onclick = () => { const value = button.dataset.architectureZoom; if (value === 'in') zoom(.15); else if (value === 'out') zoom(-.15); else { scale = 1; offsetX = Math.round((viewport.clientWidth - svg.width.baseVal.value) / 2); offsetY = Math.round((viewport.clientHeight - svg.height.baseVal.value) / 2); applyTransform() } }); viewport.addEventListener('wheel', event => { event.preventDefault(); zoom(event.deltaY < 0 ? .1 : -.1) }, { passive: false }); viewport.addEventListener('pointerdown', event => { if (event.target.closest('.architecture-node')) return; viewport.classList.add('grabbing'); startX = event.clientX - offsetX; startY = event.clientY - offsetY; viewport.setPointerCapture(event.pointerId) }); viewport.addEventListener('pointermove', event => { if (!viewport.classList.contains('grabbing')) return; offsetX = event.clientX - startX; offsetY = event.clientY - startY; applyTransform() }); viewport.addEventListener('pointerup', () => viewport.classList.remove('grabbing')); renderFactionSubnav(); }
+        function nodePos(name) { const pos = { 魂: [50, 49], 左殇: [19, 26], 沐天邈: [18, 70], 沐小葵: [79, 26], 黄金剑客: [77, 67], 邪无天: [80, 82], 龙泰然: [50, 15], 龙五: [25, 12], 玄鱼: [85, 48], 蜃楼之主: [72, 29], 腰无骨: [88, 68], 剑无影: [91, 87], 魔天: [31, 78], 魔剑: [20, 84], 偃淬: [7, 28], 上官斩: [63, 16] }; return pos[name] || [50, 50] }
+        function renderGraph() { const names = new Set(['魂', '左殇', '沐天邈', '沐小葵', '黄金剑客', '邪无天', '龙泰然', '玄鱼', '蜃楼之主', '腰无骨', '剑无影', '魔天', '魔剑', '偃淬', '上官斩']); const shown = relations.filter(r => names.has(r[0]) && names.has(r[1]) && (faction === 'all' || r[3] === 'enemy' || factions.find(f => f.name === faction)?.people.some(p => [r[0], r[1]].includes(p))) && matches(r.join(' '))); let svg = '<svg class="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none">'; shown.forEach(r => { const a = nodePos(r[0]), b = nodePos(r[1]); svg += `<line class="edge ${r[3]}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"/><text class="edge-label" x="${(a[0] + b[0]) / 2}" y="${(a[1] + b[1]) / 2}">${r[2]}</text>` }); svg += '</svg>'; const nodes = [...names].filter(n => matches(n)).map(n => { const p = nodePos(n); return `<button class="graph-node ${n === '魂' ? 'core' : ''} ${n === '邪无天' ? 'enemy' : ''}" style="left:${p[0]}%;top:${p[1]}%" data-person="${n}">${n}</button>` }).join(''); $('graph').innerHTML = svg + nodes; document.querySelectorAll('.graph-node').forEach(el => el.onclick = () => openPerson(el.dataset.person)); const rel = shown.length ? shown.map(r => `<div class="relation-item"><strong>${r[0]} ↔ ${r[1]}</strong><br><span class="relation-type">${r[2]}</span></div>`).join('') : '<div class="empty">没有符合条件的关系</div>'; $('relationList').innerHTML = '<h4>关系索引</h4>' + rel; }
+        function openPerson(name) { const related = relations.filter(r => r[0] === name || r[1] === name); const ev = workbookTimeline.flatMap(item => item.events.filter(event => (event.people || []).includes(name)).map(event => ({ time: item.time, text: event.text }))); $('drawerContent').innerHTML = `<span class="detail-kicker">人物档案</span><h3>${name}</h3><p>此人物出现在《影境人物志》及/或《影境大事纪》的关联条目中。</p><div class="detail-section"><h4>人物关系</h4><ul>${related.length ? related.map(r => `<li>${r[0] === name ? r[1] : r[0]}　<span class="relation-type">${r[2]}</span></li>`).join('') : '<li>暂无已整理关系</li>'}</ul></div><div class="detail-section"><h4>相关事件</h4><ul>${ev.length ? ev.map(e => `<li><a href="#timeline" class="profile-event-link" data-event-time="${e.time}" data-event-text="${e.text}" title="${e.time}　${e.text}">${e.time}　${e.text}</a></li>`).join('') : '<li>暂无已整理事件</li>'}</ul></div>`; document.querySelectorAll('.profile-event-link').forEach(link => link.onclick = event => { event.preventDefault(); timelineTarget = { time: link.dataset.eventTime, text: link.dataset.eventText }; $('drawer').classList.remove('open'); setView('timeline') }); $('drawer').classList.add('open') }
+        function openEvent(e) { $('drawerContent').innerHTML = `<span class="detail-kicker">${e.year} · ${e.tag}</span><h3>${e.title}</h3><p>${e.desc}</p><div class="detail-section"><h4>涉及人物 / 势力</h4><ul>${e.people.map(p => `<li>${p}</li>`).join('')}</ul></div><div class="detail-section"><h4>查看方式</h4><p>切换到“人物关系”，再搜索事件中的人物，可查看该事件关联的关系线。</p></div>`; $('drawer').classList.add('open') }
+        function setView(view) { $('drawer').classList.remove('open'); currentView = view; if (view === 'factions' && faction === 'all') faction = '组织'; document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === view)); document.querySelectorAll('.nav>button').forEach(b => b.classList.toggle('active', b.dataset.view === view)); $('factionSubnav').classList.toggle('open', view === 'factions'); if (view === 'timeline') { $('pageTitle').textContent = '影境大事纪'; $('pageSubtitle').textContent = '点击左侧时间点，在右侧阅读该时间点内发生的全部事件。'; $('topbarStatus').innerHTML = '<span><i class="dot green"></i>工作簿时间点</span><span id="workbookStatus">正在读取 Book1.xlsx</span>' } else if (view === 'factions') { $('pageTitle').textContent = `势力架构 · ${faction}`; $('pageSubtitle').textContent = '按《影境人物志》的层级关系展开势力，点击人物查看档案。'; $('topbarStatus').innerHTML = '<span>关系类型决定节点背景</span>' } if (view === 'timeline') renderTimeline(); if (view === 'factions') renderFactions(); if (view === 'relations') renderGraph() }
+        document.querySelectorAll('.nav button').forEach(b => b.onclick = () => setView(b.dataset.view)); $('closeDrawer').onclick = () => $('drawer').classList.remove('open'); document.addEventListener('click', event => { if (!$('drawer').classList.contains('open')) return; if (event.target.closest('#drawer,[data-person],button,input,select')) return; $('drawer').classList.remove('open') }); document.addEventListener('keydown', e => { if (e.key === 'Escape') $('drawer').classList.remove('open') }); renderTimeline(); renderFactions(); loadWorkbookTimeline(); loadFactionConfig();
+    </script>
+</body>
+
+</html>
