@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>影境人物志 · 大事纪</title>
+        <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="eyebrow">SHADOW REALM ARCHIVE</div>
+                <h1>影境志</h1>
+                <p>人物与历史的交互档案</p>
+            </div>
+            <nav class="nav">
+                <div class="nav-title">浏览方式</div><button class="active" data-view="timeline"><span
+                        class="icon">◷</span><span>影境大事纪</span></button><button data-view="factions"><span
+                        class="icon">▦</span><span>势力架构</span></button>
+                <div id="factionSubnav" class="faction-subnav"></div>
+                <div class="nav-title" style="margin-top:18px">管理</div><button data-view="admin"><span
+                        class="icon">⚒</span><span>角色管理</span></button>
+            </nav>
+        </aside>
+        <header class="topbar">
+            <div class="topbar-info">
+                <h2 id="pageTitle">影境大事纪</h2>
+                <p id="pageSubtitle" class="topbar-subtitle">点击左侧时间点，在右侧阅读该时间点内发生的全部事件。</p>
+            </div><span id="topbarStatus" hidden></span><span id="workbookStatus" hidden></span>
+        </header>
+        <main class="content">
+            <section id="timeline" class="view active">
+                <div class="timeline-shell">
+                    <div id="timepoints" class="timepoints">
+                        <div class="loading">正在加载时间线</div>
+                    </div>
+                    <div id="eventDetail" class="event-detail">
+                        <div class="loading">请选择左侧时间点</div>
+                    </div>
+                </div>
+            </section>
+            <section id="factions" class="view">
+                <div id="structureBoard" class="structure-board"></div>
+            </section>
+            <section id="relations" class="view">
+                <div class="relation-layout">
+                    <div id="graph" class="graph-panel"></div>
+                    <div id="relationList" class="relation-list"></div>
+                </div>
+            </section>
+            <section id="admin" class="view">
+                <div class="admin-shell">
+                    <div class="admin-form-panel">
+                        <div class="admin-form-header">
+                            <h3 id="adminFormTitle">创建角色</h3>
+                            <button id="adminResetBtn" class="admin-btn admin-btn-secondary" type="button">重置表单</button>
+                        </div>
+                        <form id="adminForm" class="admin-form" autocomplete="off">
+                            <div class="admin-row">
+                                <label class="admin-field"><span>记录类型</span><select id="adminRecordType"><option value="人物">人物</option><option value="机构">机构</option></select></label>
+                                <label class="admin-field"><span>名称 <em>*</em></span><input id="adminName" type="text" required placeholder="如：沐天邈"></label>
+                                <label class="admin-field"><span>别名（分号分隔）</span><input id="adminAliases" type="text" placeholder="如：紫冥;小紫"></label>
+                            </div>
+                            <div class="admin-row">
+                                <label class="admin-field"><span>所属组织</span><input id="adminOrg" type="text" list="orgList" placeholder="如：组织"></label>
+                                <label class="admin-field"><span>直接上级</span><input id="adminParent" type="text" list="peopleList" placeholder="上级人物/机构名"></label>
+                                <label class="admin-field"><span>组织内角色</span><input id="adminRole" type="text" placeholder="如：下属/冥使"></label>
+                            </div>
+                            <div class="admin-row">
+                                <label class="admin-field"><span>其他势力归属</span><input id="adminExtraOrg" type="text" list="orgList" placeholder="势力名"></label>
+                                <label class="admin-field"><span>身份标签</span><input id="adminExtraLabel" type="text" placeholder="如：后辈"></label>
+                            </div>
+                            <div class="admin-row">
+                                <label class="admin-field admin-field-wide"><span>备注（分号分隔）</span><input id="adminNotes" type="text" placeholder="如：核心人物;创始人"></label>
+                            </div>
+                            <div class="admin-row admin-row-actions">
+                                <button id="adminSubmitBtn" type="submit" class="admin-btn admin-btn-primary">创建角色</button>
+                                <button id="adminDeleteBtn" type="button" class="admin-btn admin-btn-danger" hidden>删除此角色</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="admin-list-panel">
+                        <div class="admin-list-header">
+                            <h3>人物列表</h3>
+                            <input id="adminSearch" type="text" placeholder="搜索名称/别名/组织…" class="admin-search">
+                            <button id="adminSaveBtn" type="button" class="admin-btn admin-btn-save">保存到文件</button>
+                        </div>
+                        <div id="adminList" class="admin-list"></div>
+                    </div>
+                </div>
+                <datalist id="orgList"></datalist>
+                <datalist id="peopleList"></datalist>
+            </section>
+        </main>
+    </div>
+    <div id="drawer" class="detail-drawer"><button id="closeDrawer" class="close" aria-label="关闭">×</button>
+        <div id="drawerContent"></div>
+    </div>
+    <script>
+        let factions = []; // 由 影境人物志.json 动态加载
+        let structures = {}; // 由 影境人物志.json 动态生成势力结构树
+        let events = []; // JSON加载失败时的备用（空）
+        let relations = []; // 由 影境人物志.json 的 relations 数组生成
+        let peopleData = { people: [], relations: [], schema_version: 3 }; // 原始 JSON 数据，供角色管理页编辑
+        let adminEditingId = null; // 当前正在编辑的人物 id（null = 创建模式）
+        const $ = id => document.getElementById(id); let currentView = 'timeline'; let query = ''; let faction = 'all'; let workbookTimeline = []; let selectedTime = 0; let characterNames = []; let timelineTarget = null;
+        function matches(text) { return !query || text.toLowerCase().includes(query.toLowerCase()) }
+        function buildFactionConfig(data) {
+            const people = data.people || [];
+            const rels = data.relations || [];
+            const idToName = {}; people.forEach(p => { idToName[p.id] = p.name; });
+            // 人物元数据 + 别名索引
+            const personMeta = new Map();
+            const aliasesMap = new Map();
+            people.forEach(p => {
+                const aliases = p.aliases || [];
+                const extraFactions = new Map();
+                (p.extra_factions || []).forEach(ef => { extraFactions.set(ef.org, ef.label); });
+                const notes = new Set(p.notes || []);
+                personMeta.set(p.name, { aliases: new Set(aliases), notes, extraFactions, org: p.org || '', role: p.role || '', parent: p.parent || '', isOrg: p.is_org || false });
+                aliases.forEach(a => { if (a && a !== p.name) aliasesMap.set(a, p.name); });
+            });
+            // relations: JSON id 格式 → 内部 [fromName, toName, label, edgeType] 格式
+            const kindToEdge = { family: 'family', enemy: 'enemy', coop: 'org', other: 'neutral' };
+            relations = rels.map(r => [idToName[r.from] || '', idToName[r.to] || '', r.label || '相关', kindToEdge[r.kind] || 'neutral']).filter(r => r[0] && r[1]);
+            // characterNames：主名 + 别名 + relations 端点，长名优先
+            const allNames = new Set();
+            personMeta.forEach((m, name) => { allNames.add(name); m.aliases.forEach(a => allNames.add(a)); });
+            relations.forEach(r => { allNames.add(r[0]); allNames.add(r[1]); });
+            characterNames = [...allNames].sort((a, b) => b.length - a.length);
+            // factions：主势力 + 其他势力归属跨势力挂载
+            const factionSet = new Set();
+            people.forEach(p => { factionSet.add(p.org); (p.extra_factions || []).forEach(ef => factionSet.add(ef.org)); });
+            const factionNames = [...factionSet];
+            factions = factionNames.map((name, index) => {
+                const peopleSet = new Set();
+                people.filter(p => p.org === name).forEach(p => peopleSet.add(p.name));
+                people.forEach(p => (p.extra_factions || []).forEach(ef => { if (ef.org === name) peopleSet.add(p.name); }));
+                return { name, color: ['#52745a', '#8b7444', '#637d49', '#6f657c', '#8b604b', '#52748b', '#687e86', '#9b7046'][index % 8], people: [...peopleSet] };
+            }).filter(f => f.people.length > 0);
+            // structures：按「直接上级」构造每个势力的架构树
+            structures = {};
+            factions.forEach(f => {
+                const name = f.name;
+                const items = people.filter(p => p.org === name);
+                if (!items.length) return;
+                // 根检测：优先真实人物根（parent 为空），其次角色关键词匹配
+                // 若所有条目的 parent 均指向势力名，则用势力名作虚拟根
+                const realRoot = items.find(p => !p.parent);
+                const useVirtualRoot = !realRoot && items.some(p => p.parent === name);
+                const rootRow = realRoot || items.find(p => /创始人|核心|堡主|家族核心|祖先|首领|冥主|台前首领/.test(p.role)) || items[0];
+                const rootName = useVirtualRoot ? name : rootRow.name;
+                const rootRole = useVirtualRoot ? '势力' : (rootRow.role || '核心人物');
+                const childrenOf = pn => items.filter(p => p.name !== rootName && p.parent === pn);
+                const makeBranch = p => ({ head: [p.name, p.role || '成员'], isOrg: p.is_org || false, children: childrenOf(p.name).map(makeBranch) });
+                const direct = childrenOf(rootName);
+                const orphan = items.filter(p => p.name !== rootName && !p.parent && !direct.some(c => c.name === p.name));
+                structures[name] = { caption: `${name} · ${items.length} 条可编辑配置记录`, root: [rootName, rootRole], rootIsVirtual: useVirtualRoot, branches: [...direct, ...orphan].map(makeBranch) };
+            });
+            window.__personMeta = personMeta;
+            window.__aliasesMap = aliasesMap;
+            enrichWorkbookPeople();
+        }
+        function enrichWorkbookPeople() {
+            const aliasMap = window.__aliasesMap || new Map();
+            const toMain = n => aliasMap.has(n) ? aliasMap.get(n) : n;
+            workbookTimeline.forEach(item => item.events.forEach(event => {
+                const matched = characterNames.filter(name => event.text.includes(name));
+                event.people = [...new Set(matched.map(toMain))];
+            }));
+        }
+        async function loadFactionConfig() { try { const response = await fetch('影境人物志.json'); if (!response.ok) throw new Error('影境人物志.json 无法读取'); peopleData = await response.json(); buildFactionConfig(peopleData); if (!factions.some(item => item.name === faction)) faction = factions[0]?.name || '组织'; renderFactionSubnav(); if (currentView === 'factions') renderFactions(); if (currentView === 'admin') renderAdminList() } catch (error) { console.error(error) } }
+        function renderTimeline() { const source = workbookTimeline.length ? workbookTimeline : events.map(e => ({ time: e.year, events: [{ text: e.title + '：' + e.desc, people: e.people || [] }] })); const filtered = source.filter(item => matches(item.time + ' ' + item.events.map(event => event.text).join(' '))); if (!filtered.length) { $('timepoints').innerHTML = '<div class="empty">没有符合条件的时间点</div>'; $('eventDetail').innerHTML = '<div class="empty">没有符合条件的事件</div>'; return } const target = timelineTarget; if (target) { const targetIndex = filtered.findIndex(item => item.time === target.time); if (targetIndex >= 0) selectedTime = targetIndex } if (selectedTime >= filtered.length) selectedTime = 0; $('timepoints').innerHTML = filtered.map((item, index) => `<button class="timepoint ${index === selectedTime ? 'active' : ''}" data-time="${index}">${item.time}</button>`).join(''); const selected = filtered[selectedTime], people = [...new Set(selected.events.flatMap(event => event.people || []))]; const peopleText = people.length ? `出场人物有：${people.join('、')}` : '出场人物有：暂无已识别人物'; $('eventDetail').innerHTML = `<h4>${selected.time}</h4><div class="detail-meta">${peopleText}</div><div class="event-detail-list">${selected.events.map((event, index) => `<div class="event-detail-item ${target && target.text === event.text ? 'target-event' : ''}" data-event-index="${index}">${event.text}</div>`).join('')}</div>`; document.querySelectorAll('.timepoint').forEach(el => el.onclick = () => { selectedTime = Number(el.dataset.time); renderTimeline() }); if (target && target.text) { const targetEvent = selected.events.findIndex(event => event.text === target.text); if (targetEvent >= 0) $('eventDetail').querySelector(`[data-event-index="${targetEvent}"]`)?.scrollIntoView({ block: 'center' }) } timelineTarget = null; $('workbookStatus').textContent = workbookTimeline.length ? `已读取 影境大事纪.json · ${workbookTimeline.length} 个时间点` : '显示备用数据'; }
+        async function loadWorkbookTimeline() { try { const response = await fetch('影境大事纪.json'); if (!response.ok) throw new Error('影境大事纪.json 无法读取'); const data = await response.json(); workbookTimeline = data.eras || []; enrichWorkbookPeople(); selectedTime = 0; renderTimeline() } catch (error) { $('workbookStatus').textContent = '读取 影境大事纪.json 失败'; $('timepoints').innerHTML = '<div class="empty">无法读取 影境大事纪.json，请通过本地服务器打开页面。</div>'; $('eventDetail').innerHTML = '<div class="empty">请使用 VS Code Live Server 或其他本地服务器访问 index.html。</div>'; console.error(error) } }
+        function renderFactionSubnav() { const names = factions.map(f => f.name); $('factionSubnav').innerHTML = names.map(name => `<button class="${name === faction ? 'active' : ''}" data-faction="${name}">${name}</button>`).join(''); document.querySelectorAll('[data-faction]').forEach(el => el.onclick = () => { faction = el.dataset.faction; setView('factions') }); }
+        function relationClass(label = '') {
+            // 顺序决定优先级：敌对 > 首领 > 亲属 > 成员 > 中立
+            if (/敌对|杀害|战斗|决斗|合谋|冲突|对抗|覆灭|进攻|离间/.test(label)) return 'relation-hostile';
+            if (/创始|首领|上级|核心|堡主|冥主|创始人|台前首领|管家/.test(label)) return 'relation-leader';
+            if (/收养|父子|父女|母子|母女|兄弟|兄妹|姐妹|祖孙|祖先|后辈|继承|情侣|夫妻|义父子|义女|遗孤|旁系|失踪之子|家族关系|兄妹|主仆/.test(label)) return 'relation-family';
+            if (/成员|下属|人使|冥使|鬼差|组织|行动|同组织|卧底|傀儡|关联|分支/.test(label)) return 'relation-member';
+            return 'relation-neutral';
+        }
+        function orgNode(node, kind = '') { return `<button class="org-node ${kind} ${relationClass(node[1])}" data-person="${node[0]}">${node[0]}<small>${node[1]}</small></button>` }
+        function flattenStructure(structure) { const levels = []; const edges = []; function visit(rawNode, parent, depth) { const node = typeof rawNode === 'string' ? { head: [rawNode, '下属'], children: [], isOrg: false } : rawNode; const current = { name: node.head[0], type: node.head[1], depth, root: depth === 0, isOrg: node.isOrg || false }; (levels[depth] ??= []).push(current); if (parent) edges.push({ parent, child: current }); (node.children || []).forEach(child => visit(child, current, depth + 1)) } visit({ head: structure.root, children: structure.branches, isOrg: false }, null, 0); return { levels, edges } }
+        function architectureSvg(structure) { const layout = flattenStructure(structure); const nodeWidth = 142, nodeHeight = 58, xGap = 28, yGap = 92, marginX = 50, marginY = 42; const root = layout.levels[0][0]; const children = new Map(); layout.edges.forEach(edge => { if (!children.has(edge.parent)) children.set(edge.parent, []); children.get(edge.parent).push(edge.child) }); function subtreeWidth(node) { const childNodes = children.get(node) || []; if (!childNodes.length) { node.subtreeWidth = 1; return 1 } node.subtreeWidth = childNodes.reduce((total, child) => total + subtreeWidth(child), 0); return node.subtreeWidth } subtreeWidth(root); function place(node, start) { const childNodes = children.get(node) || []; if (!childNodes.length) { node.x = start * (nodeWidth + xGap); return } let cursor = start; childNodes.forEach(child => { const width = subtreeWidth(child); place(child, cursor); cursor += width }); node.x = (childNodes[0].x + childNodes[childNodes.length - 1].x) / 2 } place(root, 0); const leafCount = Math.max(1, root.subtreeWidth), rawWidth = leafCount * (nodeWidth + xGap) - xGap; const width = Math.max(900, marginX * 2 + rawWidth), height = marginY * 2 + layout.levels.length * (nodeHeight + yGap) - yGap; const rootShift = width / 2 - (root.x + nodeWidth / 2); layout.levels.flat().forEach(node => { node.x += rootShift; node.y = marginY + node.depth * (nodeHeight + yGap) }); const edges = layout.edges.map(edge => { const x1 = edge.parent.x + nodeWidth / 2, y1 = edge.parent.y + nodeHeight, x2 = edge.child.x + nodeWidth / 2, y2 = edge.child.y, mid = (y1 + y2) / 2; return `<path class="architecture-edge" d="M ${x1} ${y1} V ${mid} H ${x2} V ${y2}"/>` }).join(''); const nodes = layout.levels.flat().map(node => `<g class="architecture-node ${relationClass(node.type)} ${node.root ? 'root' : ''} ${node.isOrg ? 'is-org' : ''}" data-person="${node.name}" transform="translate(${node.x},${node.y})"><rect width="${nodeWidth}" height="${nodeHeight}" rx="3"/><text class="node-name" x="${nodeWidth / 2}" y="24">${node.name}</text><text class="node-type" x="${nodeWidth / 2}" y="43">${node.type}</text></g>`).join(''); return { markup: `<svg class="architecture-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${edges}${nodes}</svg>`, width, height } }
+        function renderFactions() { const name = faction === 'all' ? '组织' : faction; const structure = structures[name] || structures[Object.keys(structures)[0]]; if (!structure) return; if (currentView === 'factions') { $('pageTitle').textContent = `势力架构 · ${name}`; $('pageSubtitle').textContent = '按《影境人物志》的层级关系展开势力，点击人物查看档案。'; $('topbarStatus').innerHTML = '<span>关系类型决定节点背景</span>' } $('structureBoard').innerHTML = `<div class="architecture-toolbar"><span class="architecture-caption">${structure.caption} · 同级节点已对齐</span><button data-architecture-zoom="out">−</button><button data-architecture-zoom="reset">100%</button><button data-architecture-zoom="in">＋</button></div><div class="architecture-viewport">${architectureSvg(structure).markup}</div>`; const viewport = $('structureBoard').querySelector('.architecture-viewport'), svg = viewport.querySelector('.architecture-svg'); let scale = 1, offsetX = Math.round((viewport.clientWidth - svg.width.baseVal.value) / 2), offsetY = Math.round((viewport.clientHeight - svg.height.baseVal.value) / 2), startX = 0, startY = 0; const applyTransform = () => { svg.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})` }; applyTransform(); const zoom = amount => { scale = Math.max(.45, Math.min(2.5, scale + amount)); applyTransform() }; svg.addEventListener('click', event => { const node = event.target.closest('.architecture-node'); if (node) openPerson(node.dataset.person) }); svg.addEventListener('pointerdown', event => { if (event.target.closest('.architecture-node')) event.stopPropagation() }); $('structureBoard').querySelectorAll('[data-architecture-zoom]').forEach(button => button.onclick = () => { const value = button.dataset.architectureZoom; if (value === 'in') zoom(.15); else if (value === 'out') zoom(-.15); else { scale = 1; offsetX = Math.round((viewport.clientWidth - svg.width.baseVal.value) / 2); offsetY = Math.round((viewport.clientHeight - svg.height.baseVal.value) / 2); applyTransform() } }); viewport.addEventListener('wheel', event => { event.preventDefault(); zoom(event.deltaY < 0 ? .1 : -.1) }, { passive: false }); viewport.addEventListener('pointerdown', event => { if (event.target.closest('.architecture-node')) return; viewport.classList.add('grabbing'); startX = event.clientX - offsetX; startY = event.clientY - offsetY; viewport.setPointerCapture(event.pointerId) }); viewport.addEventListener('pointermove', event => { if (!viewport.classList.contains('grabbing')) return; offsetX = event.clientX - startX; offsetY = event.clientY - startY; applyTransform() }); viewport.addEventListener('pointerup', () => viewport.classList.remove('grabbing')); renderFactionSubnav(); }
+        function nodePos(name, idx = 0, total = 1) {
+            // 16 位核心人物固定坐标（保留原有视觉布局），其余用黄金角螺旋兜底
+            const hardcoded = {
+                魂: [50, 49], 左殇: [19, 26], 沐天邈: [18, 70], 沐小葵: [79, 26], 黄金剑客: [77, 67],
+                邪无天: [80, 82], 龙泰然: [50, 15], 龙五: [25, 12], 玄鱼: [85, 48], 蜃楼之主: [72, 29],
+                腰无骨: [88, 68], 剑无影: [91, 87], 魔天: [31, 78], 魔剑: [20, 84], 偃淬: [7, 28], 上官斩: [63, 16]
+            };
+            if (hardcoded[name]) return hardcoded[name];
+            // 阿基米德螺旋 + 黄金角(≈137.5°)展开，从中心第8%半径 → 第46%
+            const core = Object.keys(hardcoded).length;
+            const relIdx = Math.max(0, idx - core);
+            const relTotal = Math.max(1, total - core);
+            const angle = relIdx * 2.3999; // 2π / φ² 黄金角，分布均匀不重叠
+            const t = relTotal <= 1 ? 0 : relIdx / (relTotal - 1);
+            const radius = 8 + Math.sqrt(t) * 38; // 根号半径向外扩散，外圈更松
+            return [
+                Math.max(3, Math.min(97, 50 + Math.cos(angle) * radius)),
+                Math.max(3, Math.min(97, 50 + Math.sin(angle) * radius))
+            ];
+        }
+        function renderGraph() {
+            // 动态收集人物集合：relations两端 + 所有势力成员，不再硬编码16人
+            const nameSet = new Set();
+            (relations || []).forEach(r => { nameSet.add(r[0]); nameSet.add(r[1]); });
+            (factions || []).forEach(f => (f.people || []).forEach(p => nameSet.add(p)));
+            const names = [...nameSet];
+            const shown = (relations || []).filter(r =>
+                nameSet.has(r[0]) && nameSet.has(r[1])
+                && (faction === 'all' || r[3] === 'enemy' || (factions || []).find(f => f.name === faction)?.people?.some(p => [r[0], r[1]].includes(p)))
+                && matches(r.join(' '))
+            );
+            let svg = '<svg class="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none">';
+            shown.forEach(r => {
+                const ai = names.indexOf(r[0]), bi = names.indexOf(r[1]);
+                const a = nodePos(r[0], ai, names.length), b = nodePos(r[1], bi, names.length);
+                svg += `<line class="edge ${r[3]}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"/><text class="edge-label" x="${(a[0] + b[0]) / 2}" y="${(a[1] + b[1]) / 2}">${r[2]}</text>`;
+            });
+            svg += '</svg>';
+            const coreSet = new Set(['魂']);
+            const enemySet = new Set(['邪无天']);
+            const nodes = names.filter(n => matches(n)).map((n, i) => {
+                const p = nodePos(n, names.indexOf(n), names.length);
+                return `<button class="graph-node ${coreSet.has(n) ? 'core' : ''} ${enemySet.has(n) ? 'enemy' : ''}" style="left:${p[0]}%;top:${p[1]}%" data-person="${n}">${n}</button>`;
+            }).join('');
+            $('graph').innerHTML = svg + nodes;
+            document.querySelectorAll('.graph-node').forEach(el => el.onclick = () => openPerson(el.dataset.person));
+            const rel = shown.length ? shown.map(r => `<div class="relation-item"><strong>${r[0]} ↔ ${r[1]}</strong><br><span class="relation-type">${r[2]}</span></div>`).join('') : '<div class="empty">没有符合条件的关系</div>';
+            $('relationList').innerHTML = '<h4>关系索引</h4>' + rel;
+        }
+        function openPerson(name) {
+            const meta = (window.__personMeta && window.__personMeta.get(name)) || null;
+            const aliases = meta ? [...meta.aliases] : [];
+            const extraFactions = meta ? [...(meta.extraFactions || new Map()).entries()] : [];
+            const notes = meta ? [...(meta.notes || new Set())] : [];
+            const org = meta?.org || '';
+            const role = meta?.role || '';
+            const parent = meta?.parent || '';
+            const related = relations.filter(r => r[0] === name || r[1] === name);
+            const ev = workbookTimeline.flatMap(item => item.events.filter(event => (event.people || []).includes(name)).map(event => ({ time: item.time, text: event.text })));
+            const escAttr = s => String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+            const baseInfo = [];
+            if (org) baseInfo.push(`<li><strong>所属组织：</strong>${org}${role ? `（${role}）` : ''}</li>`);
+            if (parent) baseInfo.push(`<li><strong>直接上级：</strong>${parent}</li>`);
+            if (aliases.length) baseInfo.push(`<li><strong>别名：</strong>${aliases.join('、')}</li>`);
+            if (extraFactions.length) baseInfo.push(`<li><strong>其他势力归属：</strong>${extraFactions.map(([o, l]) => l ? `${o}（${l}）` : o).join('、')}</li>`);
+            $('drawerContent').innerHTML = `<span class="detail-kicker">人物档案</span><h3>${name}</h3><p>此人物出现在《影境人物志》及/或《影境大事纪》的关联条目中。</p>${baseInfo.length ? `<div class="detail-section"><h4>基础信息</h4><ul>${baseInfo.join('')}</ul></div>` : ''}<div class="detail-section"><h4>人物关系</h4><ul>${related.length ? related.map(r => `<li>${r[0] === name ? r[1] : r[0]}　<span class="relation-type">${r[2]}</span></li>`).join('') : '<li>暂无已整理关系</li>'}</ul></div>${notes.length ? `<div class="detail-section"><h4>备注</h4><ul>${notes.map(n => `<li>${n}</li>`).join('')}</ul></div>` : ''}<div class="detail-section"><h4>相关事件</h4><ul>${ev.length ? ev.map(e => `<li><a href="#timeline" class="profile-event-link" data-event-time="${escAttr(e.time)}" data-event-text="${escAttr(e.text)}" title="${escAttr(e.time + '　' + e.text)}">${e.time}　${e.text}</a></li>`).join('') : '<li>暂无已整理事件</li>'}</ul></div>`;
+            document.querySelectorAll('.profile-event-link').forEach(link => link.onclick = event => { event.preventDefault(); timelineTarget = { time: link.dataset.eventTime, text: link.dataset.eventText }; $('drawer').classList.remove('open'); setView('timeline') }); $('drawer').classList.add('open');
+        }
+        function openEvent(e) { $('drawerContent').innerHTML = `<span class="detail-kicker">${e.year} · ${e.tag}</span><h3>${e.title}</h3><p>${e.desc}</p><div class="detail-section"><h4>涉及人物 / 势力</h4><ul>${e.people.map(p => `<li>${p}</li>`).join('')}</ul></div><div class="detail-section"><h4>查看方式</h4><p>切换到"人物关系"，再搜索事件中的人物，可查看该事件关联的关系线。</p></div>`; $('drawer').classList.add('open') }
+        // ===== 角色管理 =====
+        function renderAdminList() {
+            const people = peopleData.people || [];
+            const search = ($('adminSearch') ? $('adminSearch').value : '').toLowerCase();
+            const filtered = people.filter(p => !search || p.name.toLowerCase().includes(search) || (p.aliases || []).join(' ').toLowerCase().includes(search) || (p.org || '').toLowerCase().includes(search));
+            $('adminList').innerHTML = filtered.length ? filtered.map(p => `<div class="admin-list-item ${adminEditingId === p.id ? 'active' : ''}" data-id="${p.id}"><span class="admin-list-name">${p.name}</span>${p.is_org ? '<span class="admin-tag">机构</span>' : ''}<span class="admin-list-meta">${p.org || '未分类'} · ${p.role || '成员'}</span></div>`).join('') : '<div class="admin-empty">暂无人物数据</div>';
+            document.querySelectorAll('.admin-list-item').forEach(el => el.onclick = () => adminSelect(Number(el.dataset.id)));
+            $('orgList').innerHTML = [...new Set(people.map(p => p.org).filter(Boolean))].map(o => `<option value="${o}">`).join('');
+            $('peopleList').innerHTML = people.map(p => `<option value="${p.name}">`).join('');
+        }
+        function adminResetForm() {
+            adminEditingId = null;
+            $('adminForm').reset();
+            $('adminFormTitle').textContent = '创建角色';
+            $('adminSubmitBtn').textContent = '创建角色';
+            $('adminDeleteBtn').hidden = true;
+            renderAdminList();
+        }
+        function adminSelect(id) {
+            const p = (peopleData.people || []).find(x => x.id === id);
+            if (!p) return;
+            adminEditingId = id;
+            $('adminFormTitle').textContent = '编辑角色 · ' + p.name;
+            $('adminSubmitBtn').textContent = '保存修改';
+            $('adminDeleteBtn').hidden = false;
+            $('adminRecordType').value = p.record_type || '人物';
+            $('adminName').value = p.name || '';
+            $('adminAliases').value = (p.aliases || []).join(';');
+            $('adminOrg').value = p.org || '';
+            $('adminParent').value = p.parent || '';
+            $('adminRole').value = p.role || '';
+            $('adminNotes').value = (p.notes || []).join(';');
+            const ef = p.extra_factions || [];
+            $('adminExtraOrg').value = ef[0] ? ef[0].org || '' : '';
+            $('adminExtraLabel').value = ef[0] ? ef[0].label || '' : '';
+            renderAdminList();
+        }
+        function adminSubmit(e) {
+            e.preventDefault();
+            const name = $('adminName').value.trim();
+            if (!name) return;
+            const recordType = $('adminRecordType').value;
+            const extraFactions = [];
+            if ($('adminExtraOrg').value.trim()) extraFactions.push({ org: $('adminExtraOrg').value.trim(), label: $('adminExtraLabel').value.trim() });
+            const person = {
+                record_type: recordType,
+                name: name,
+                aliases: $('adminAliases').value.split(/[;；]/).map(s => s.trim()).filter(Boolean),
+                org: $('adminOrg').value.trim(),
+                parent: $('adminParent').value.trim(),
+                role: $('adminRole').value.trim(),
+                is_org: recordType === '机构',
+                extra_factions: extraFactions,
+                notes: $('adminNotes').value.split(/[;；]/).map(s => s.trim()).filter(Boolean)
+            };
+            if (adminEditingId !== null) {
+                const idx = peopleData.people.findIndex(p => p.id === adminEditingId);
+                if (idx >= 0) { person.id = adminEditingId; peopleData.people[idx] = person; }
+            } else {
+                person.id = (peopleData.people || []).reduce((m, p) => Math.max(m, p.id || 0), 0) + 1;
+                peopleData.people.push(person);
+            }
+            buildFactionConfig(peopleData);
+            renderFactionSubnav();
+            adminResetForm();
+        }
+        function adminDelete() {
+            if (adminEditingId === null) return;
+            if (!confirm('确认删除此角色？相关关系也将一并移除。')) return;
+            const person = peopleData.people.find(p => p.id === adminEditingId);
+            const personName = person ? person.name : '';
+            peopleData.people = peopleData.people.filter(p => p.id !== adminEditingId);
+            if (personName) peopleData.relations = (peopleData.relations || []).filter(r => r.from !== personName && r.to !== personName);
+            buildFactionConfig(peopleData);
+            renderFactionSubnav();
+            adminResetForm();
+        }
+        function adminSave() {
+            const blob = new Blob([JSON.stringify(peopleData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = '影境人物志.json'; a.click();
+            URL.revokeObjectURL(url);
+        }
+        function setView(view) { $('drawer').classList.remove('open'); currentView = view; if (view === 'factions' && faction === 'all') faction = '组织'; document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === view)); document.querySelectorAll('.nav>button').forEach(b => b.classList.toggle('active', b.dataset.view === view)); $('factionSubnav').classList.toggle('open', view === 'factions'); if (view === 'timeline') { $('pageTitle').textContent = '影境大事纪'; $('pageSubtitle').textContent = '点击左侧时间点，在右侧阅读该时间点内发生的全部事件。'; $('topbarStatus').innerHTML = '<span><i class="dot green"></i>工作簿时间点</span><span id="workbookStatus">正在读取 影境大事纪.json</span>' } else if (view === 'factions') { $('pageTitle').textContent = `势力架构 · ${faction}`; $('pageSubtitle').textContent = '按《影境人物志》的层级关系展开势力，点击人物查看档案。'; $('topbarStatus').innerHTML = '<span>关系类型决定节点背景</span>' } else if (view === 'admin') { $('pageTitle').textContent = '角色管理'; $('pageSubtitle').textContent = '创建、编辑人物与机构信息。修改后点击「保存到文件」导出 JSON。'; $('topbarStatus').innerHTML = '<span>共 ' + (peopleData.people || []).length + ' 条记录</span>' } if (view === 'timeline') renderTimeline(); if (view === 'factions') renderFactions(); if (view === 'relations') renderGraph(); if (view === 'admin') renderAdminList() }
+        document.querySelectorAll('.nav button').forEach(b => b.onclick = () => setView(b.dataset.view)); $('closeDrawer').onclick = () => $('drawer').classList.remove('open'); document.addEventListener('click', event => { if (!$('drawer').classList.contains('open')) return; if (event.target.closest('#drawer,[data-person],button,input,select')) return; $('drawer').classList.remove('open') }); document.addEventListener('keydown', e => { if (e.key === 'Escape') $('drawer').classList.remove('open') }); $('adminForm').onsubmit = adminSubmit; $('adminResetBtn').onclick = adminResetForm; $('adminDeleteBtn').onclick = adminDelete; $('adminSaveBtn').onclick = adminSave; $('adminSearch').oninput = renderAdminList; renderTimeline(); renderFactions(); loadWorkbookTimeline(); loadFactionConfig();
+    </script>
+</body>
+
+</html>

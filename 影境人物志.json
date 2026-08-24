@@ -1,0 +1,1707 @@
+{
+  "schema_version": 3,
+  "people": [
+    {
+      "id": 1,
+      "record_type": "人物",
+      "name": "沐天邈",
+      "aliases": [],
+      "org": "组织",
+      "parent": "",
+      "role": "创始人/上级",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": [
+        "组织创始人及冥主"
+      ]
+    },
+    {
+      "id": 2,
+      "record_type": "人物",
+      "name": "左殇",
+      "aliases": [
+        "紫冥"
+      ],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": [
+        "紫冥"
+      ]
+    },
+    {
+      "id": 3,
+      "record_type": "人物",
+      "name": "魂",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "暗魔天堡",
+          "label": "父子/后人"
+        }
+      ],
+      "notes": [
+        "核心人物"
+      ]
+    },
+    {
+      "id": 4,
+      "record_type": "人物",
+      "name": "暗禅",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 5,
+      "record_type": "人物",
+      "name": "虚空",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 6,
+      "record_type": "人物",
+      "name": "小斯",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 7,
+      "record_type": "人物",
+      "name": "第七人",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/冥使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 8,
+      "record_type": "人物",
+      "name": "全忠",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "下属/大管家",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 9,
+      "record_type": "人物",
+      "name": "沐小葵",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "女儿/组织成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 10,
+      "record_type": "人物",
+      "name": "玉妖",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐小葵",
+      "role": "主仆关系",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 11,
+      "record_type": "人物",
+      "name": "铁鬼",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐小葵",
+      "role": "主仆关系",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 12,
+      "record_type": "人物",
+      "name": "万巧茹",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 13,
+      "record_type": "人物",
+      "name": "玄鱼",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "玄家",
+          "label": "后辈"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": 14,
+      "record_type": "人物",
+      "name": "剑玄",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "十一人阁",
+          "label": "敌对/关联"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": 15,
+      "record_type": "人物",
+      "name": "海市",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 16,
+      "record_type": "人物",
+      "name": "炉鬼",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 17,
+      "record_type": "人物",
+      "name": "勾姐",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 18,
+      "record_type": "人物",
+      "name": "飞云",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 19,
+      "record_type": "人物",
+      "name": "云机",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 20,
+      "record_type": "人物",
+      "name": "侍者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 21,
+      "record_type": "人物",
+      "name": "宿莫",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 22,
+      "record_type": "人物",
+      "name": "松音",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 23,
+      "record_type": "人物",
+      "name": "秀才",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 24,
+      "record_type": "人物",
+      "name": "赤月",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 25,
+      "record_type": "人物",
+      "name": "隐狗",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 26,
+      "record_type": "人物",
+      "name": "魔桥",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 27,
+      "record_type": "人物",
+      "name": "赖小生",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使/卧底",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": [
+        "魔堡天蝎坛坛主"
+      ]
+    },
+    {
+      "id": 28,
+      "record_type": "人物",
+      "name": "长鸿",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 29,
+      "record_type": "人物",
+      "name": "老桂",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 30,
+      "record_type": "人物",
+      "name": "雷当",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 31,
+      "record_type": "人物",
+      "name": "水冰淼",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 32,
+      "record_type": "人物",
+      "name": "无明",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 33,
+      "record_type": "人物",
+      "name": "苦海",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "十一人阁",
+          "label": "下属/成员"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": 34,
+      "record_type": "人物",
+      "name": "木沉",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 35,
+      "record_type": "人物",
+      "name": "木妖",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 36,
+      "record_type": "人物",
+      "name": "傀笙",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 37,
+      "record_type": "人物",
+      "name": "醉者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 38,
+      "record_type": "人物",
+      "name": "冷蒹",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 39,
+      "record_type": "人物",
+      "name": "瞳媚",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 40,
+      "record_type": "人物",
+      "name": "玉珠",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "人使",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 41,
+      "record_type": "人物",
+      "name": "狱",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差首领/上级",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 42,
+      "record_type": "人物",
+      "name": "爆魔",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 43,
+      "record_type": "人物",
+      "name": "刃鬼",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 44,
+      "record_type": "人物",
+      "name": "铰者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 45,
+      "record_type": "人物",
+      "name": "玄者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 46,
+      "record_type": "人物",
+      "name": "铸者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 47,
+      "record_type": "人物",
+      "name": "力者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 48,
+      "record_type": "人物",
+      "name": "刀者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 49,
+      "record_type": "人物",
+      "name": "锤者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 50,
+      "record_type": "人物",
+      "name": "钩者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 51,
+      "record_type": "人物",
+      "name": "顽者",
+      "aliases": [],
+      "org": "组织",
+      "parent": "沐天邈",
+      "role": "鬼差下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 52,
+      "record_type": "人物",
+      "name": "黄金剑客",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "",
+      "role": "创始人/首领",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 53,
+      "record_type": "人物",
+      "name": "玄玉",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "玄家",
+          "label": "后辈"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": 54,
+      "record_type": "人物",
+      "name": "半月花",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 55,
+      "record_type": "人物",
+      "name": "飞云索",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 56,
+      "record_type": "人物",
+      "name": "上官斩",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 57,
+      "record_type": "人物",
+      "name": "血屠",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 58,
+      "record_type": "人物",
+      "name": "堕",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 59,
+      "record_type": "人物",
+      "name": "梦华",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 60,
+      "record_type": "人物",
+      "name": "醉苍穹",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 61,
+      "record_type": "人物",
+      "name": "赢老太君",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "下属/成员",
+      "is_org": false,
+      "extra_factions": [
+        {
+          "org": "赢氏家族",
+          "label": "家族核心"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": 62,
+      "record_type": "人物",
+      "name": "蜃楼之主",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "黄金剑客",
+      "role": "傀儡/台前首领",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 63,
+      "record_type": "人物",
+      "name": "木老师",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "十一人阁",
+      "role": "成员/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 64,
+      "record_type": "人物",
+      "name": "老乌龟",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "上官斩",
+      "role": "下属/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 65,
+      "record_type": "人物",
+      "name": "蝶",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "十一人阁",
+      "role": "关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 66,
+      "record_type": "人物",
+      "name": "之云",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "半月花",
+      "role": "下属/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 67,
+      "record_type": "人物",
+      "name": "弄蛇",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "十一人阁",
+      "role": "成员/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 68,
+      "record_type": "人物",
+      "name": "夜锋",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "蜃楼之主",
+      "role": "成员/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 69,
+      "record_type": "人物",
+      "name": "铁诞",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "十一人阁",
+      "role": "成员/关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 70,
+      "record_type": "人物",
+      "name": "龙泰然",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "",
+      "role": "家族创始人/上级",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 71,
+      "record_type": "人物",
+      "name": "龙一",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 72,
+      "record_type": "人物",
+      "name": "龙二",
+      "aliases": [
+        "龙亦绝"
+      ],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 73,
+      "record_type": "人物",
+      "name": "龙三",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 74,
+      "record_type": "人物",
+      "name": "龙四",
+      "aliases": [
+        "龙烈"
+      ],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 75,
+      "record_type": "人物",
+      "name": "龙五",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 76,
+      "record_type": "人物",
+      "name": "龙六",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 77,
+      "record_type": "人物",
+      "name": "龙七",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 78,
+      "record_type": "人物",
+      "name": "龙八",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 79,
+      "record_type": "人物",
+      "name": "龙九",
+      "aliases": [
+        "龙星"
+      ],
+      "org": "龙氏家族",
+      "parent": "龙泰然",
+      "role": "儿子",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 80,
+      "record_type": "人物",
+      "name": "龙鸣玉",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙氏家族",
+      "role": "旁系/家族高手",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 81,
+      "record_type": "人物",
+      "name": "龙复园",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙五",
+      "role": "失踪之子/后辈",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": [
+        "图中以龙氏家族遗孤身份关联"
+      ]
+    },
+    {
+      "id": 82,
+      "record_type": "人物",
+      "name": "公孙晓风",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙氏家族",
+      "role": "关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 83,
+      "record_type": "人物",
+      "name": "莫招云",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙氏家族",
+      "role": "关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 84,
+      "record_type": "人物",
+      "name": "越霜客",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "龙氏家族",
+      "role": "关联",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 85,
+      "record_type": "人物",
+      "name": "邪无天",
+      "aliases": [],
+      "org": "影",
+      "parent": "",
+      "role": "创始人/首领",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 86,
+      "record_type": "人物",
+      "name": "葬无底",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 87,
+      "record_type": "人物",
+      "name": "腰无骨",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 88,
+      "record_type": "人物",
+      "name": "冷荼",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 89,
+      "record_type": "人物",
+      "name": "剑无影",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 90,
+      "record_type": "人物",
+      "name": "影魅",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 91,
+      "record_type": "人物",
+      "name": "狂影",
+      "aliases": [],
+      "org": "影",
+      "parent": "邪无天",
+      "role": "下属",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 92,
+      "record_type": "人物",
+      "name": "魔少城",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "",
+      "role": "堡主/上级",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 93,
+      "record_type": "人物",
+      "name": "魔天",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "魔少城",
+      "role": "儿子/堡主",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 94,
+      "record_type": "人物",
+      "name": "魔海",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "魔少城",
+      "role": "家族成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 95,
+      "record_type": "人物",
+      "name": "魔川",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "魔少城",
+      "role": "家族成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 96,
+      "record_type": "人物",
+      "name": "魔野",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "魔少城",
+      "role": "家族成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 97,
+      "record_type": "人物",
+      "name": "玄墨",
+      "aliases": [],
+      "org": "玄家",
+      "parent": "",
+      "role": "祖先",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 98,
+      "record_type": "人物",
+      "name": "玄礼",
+      "aliases": [],
+      "org": "玄家",
+      "parent": "玄墨",
+      "role": "初代",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 99,
+      "record_type": "人物",
+      "name": "玄机",
+      "aliases": [],
+      "org": "玄家",
+      "parent": "玄礼",
+      "role": "后辈",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 100,
+      "record_type": "人物",
+      "name": "赢妙",
+      "aliases": [],
+      "org": "赢氏家族",
+      "parent": "赢老太君",
+      "role": "后辈/家族成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 101,
+      "record_type": "人物",
+      "name": "澄儿",
+      "aliases": [],
+      "org": "赢氏家族",
+      "parent": "赢妙",
+      "role": "后辈/家族成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 102,
+      "record_type": "人物",
+      "name": "妙手老张",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 103,
+      "record_type": "人物",
+      "name": "灰寡妇",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 104,
+      "record_type": "人物",
+      "name": "白头客",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 105,
+      "record_type": "人物",
+      "name": "聚宝财枭",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 106,
+      "record_type": "人物",
+      "name": "红白娘子",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 107,
+      "record_type": "人物",
+      "name": "昆仑三杰",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "门派成员",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 108,
+      "record_type": "人物",
+      "name": "南宫鸣",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 109,
+      "record_type": "机构",
+      "name": "正帮",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 110,
+      "record_type": "机构",
+      "name": "黑镖门",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 111,
+      "record_type": "机构",
+      "name": "金钱赌坊",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 112,
+      "record_type": "机构",
+      "name": "全玉阁",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 113,
+      "record_type": "机构",
+      "name": "械城",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 114,
+      "record_type": "机构",
+      "name": "大荒天堡",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 115,
+      "record_type": "机构",
+      "name": "天下钱庄",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 116,
+      "record_type": "机构",
+      "name": "青堡书院",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 117,
+      "record_type": "机构",
+      "name": "学士阁",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 118,
+      "record_type": "机构",
+      "name": "守正司",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 119,
+      "record_type": "机构",
+      "name": "铁鹰卫队",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 120,
+      "record_type": "机构",
+      "name": "沉海舰队",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "组织",
+      "is_org": true,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 121,
+      "record_type": "人物",
+      "name": "铁君子",
+      "aliases": [],
+      "org": "武林各派",
+      "parent": "武林各派",
+      "role": "中立人物",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": [
+        "与沐天邈决斗身亡"
+      ]
+    },
+    {
+      "id": 122,
+      "record_type": "人物",
+      "name": "魔剑",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "魔天",
+      "role": "儿子/旁支",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 123,
+      "record_type": "势力",
+      "name": "组织",
+      "aliases": [],
+      "org": "组织",
+      "parent": "",
+      "role": "势力汇总",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 124,
+      "record_type": "势力",
+      "name": "十一人阁",
+      "aliases": [],
+      "org": "十一人阁",
+      "parent": "",
+      "role": "势力汇总",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 125,
+      "record_type": "势力",
+      "name": "暗魔天堡",
+      "aliases": [],
+      "org": "暗魔天堡",
+      "parent": "",
+      "role": "势力汇总",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    },
+    {
+      "id": 126,
+      "record_type": "势力",
+      "name": "龙氏家族",
+      "aliases": [],
+      "org": "龙氏家族",
+      "parent": "",
+      "role": "势力汇总",
+      "is_org": false,
+      "extra_factions": [],
+      "notes": []
+    }
+  ],
+  "relations": [
+    {
+      "from": 1,
+      "to": 3,
+      "kind": "family",
+      "label": "义父子/上下级"
+    },
+    {
+      "from": 1,
+      "to": 9,
+      "kind": "family",
+      "label": "父女"
+    },
+    {
+      "from": 1,
+      "to": 121,
+      "kind": "enemy",
+      "label": "决斗/杀害"
+    },
+    {
+      "from": 2,
+      "to": 13,
+      "kind": "family",
+      "label": "情侣"
+    },
+    {
+      "from": 2,
+      "to": 62,
+      "kind": "enemy",
+      "label": "敌对/战斗"
+    },
+    {
+      "from": 2,
+      "to": 75,
+      "kind": "family",
+      "label": "父子"
+    },
+    {
+      "from": 2,
+      "to": 85,
+      "kind": "enemy",
+      "label": "敌对/战斗"
+    },
+    {
+      "from": 3,
+      "to": 14,
+      "kind": "coop",
+      "label": "同组织/行动"
+    },
+    {
+      "from": 3,
+      "to": 62,
+      "kind": "enemy",
+      "label": "敌对/战斗"
+    },
+    {
+      "from": 3,
+      "to": 85,
+      "kind": "enemy",
+      "label": "敌对/战斗"
+    },
+    {
+      "from": 3,
+      "to": 88,
+      "kind": "enemy",
+      "label": "敌对/杀害"
+    },
+    {
+      "from": 3,
+      "to": 93,
+      "kind": "family",
+      "label": "父子"
+    },
+    {
+      "from": 3,
+      "to": 122,
+      "kind": "family",
+      "label": "兄弟"
+    },
+    {
+      "from": 13,
+      "to": 53,
+      "kind": "family",
+      "label": "兄妹"
+    },
+    {
+      "from": 52,
+      "to": 53,
+      "kind": "family",
+      "label": "收养/上下级"
+    },
+    {
+      "from": 52,
+      "to": 99,
+      "kind": "enemy",
+      "label": "敌对/杀害"
+    },
+    {
+      "from": 61,
+      "to": 62,
+      "kind": "coop",
+      "label": "同阁同僚"
+    },
+    {
+      "from": 75,
+      "to": 80,
+      "kind": "family",
+      "label": "家族关系"
+    },
+    {
+      "from": 80,
+      "to": 93,
+      "kind": "enemy",
+      "label": "敌对/战斗"
+    },
+    {
+      "from": 85,
+      "to": 87,
+      "kind": "enemy",
+      "label": "合谋/被杀害"
+    },
+    {
+      "from": 123,
+      "to": 124,
+      "kind": "enemy",
+      "label": "冲突/对抗"
+    },
+    {
+      "from": 123,
+      "to": 125,
+      "kind": "enemy",
+      "label": "进攻/覆灭"
+    },
+    {
+      "from": 123,
+      "to": 126,
+      "kind": "enemy",
+      "label": "离间/冲突"
+    }
+  ]
+}
